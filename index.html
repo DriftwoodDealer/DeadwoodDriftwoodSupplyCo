@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DEADWOOD: Driftwood Supply Co.</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            background-color: #050505;
+            color: #e0e0e0;
+            font-family: ui-sans-serif, system-ui, -apple-system, sans-serif;
+            margin: 0;
+            overflow-x: hidden;
+        }
+        .hero-gradient {
+            background: linear-gradient(to bottom, transparent 0%, #050505 100%);
+        }
+        .glass-card {
+            background: rgba(15, 15, 15, 0.7);
+            backdrop-filter: blur(25px);
+            -webkit-backdrop-filter: blur(25px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col items-center">
+
+    <div class="relative w-full h-[65vh] overflow-hidden bg-black">
+        <img src="public/assets/images/deadwood-hero.png" alt="DEADWOOD" 
+             class="w-full h-full object-contain md:object-cover opacity-95 brightness-110">
+        
+        <div class="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-[#050505]"></div>
+        <div class="absolute inset-0 bg-black/10"></div> </div>
+
+    <div class="glass-card -mt-32 p-12 rounded-3xl shadow-2xl text-center max-w-2xl mx-4 relative z-10">
+        <h1 class="text-3xl font-extralight tracking-[0.6em] uppercase mb-6 text-white">Deadwood</h1>
+        
+        <p class="text-sm tracking-wide text-gray-400 mb-10 leading-relaxed">
+            Missouri River Relics | Digital Atelier<br>
+            Sourcing Masterpiece Driftwood for the Bioactive & Taxidermy Sectors.
+        </p>
+        
+        <div class="flex justify-center gap-4 mb-10">
+            <span class="text-[9px] uppercase tracking-widest text-gray-500 border border-gray-800 px-4 py-1.5 rounded-full">Reptile</span>
+            <span class="text-[9px] uppercase tracking-widest text-gray-500 border border-gray-800 px-4 py-1.5 rounded-full">Taxidermy</span>
+            <span class="text-[9px] uppercase tracking-widest text-gray-500 border border-gray-800 px-4 py-1.5 rounded-full">Landscape</span>
+        </div>
+        
+        <div class="h-px w-24 bg-gray-800 mx-auto mb-8"></div>
+        
+        <p class="text-[10px] uppercase tracking-[0.5em] text-gray-600">Coming Soon | Rosenthal & Van Buren</p>
+    </div>
+
+</body>
+</html>
