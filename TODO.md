@@ -11,8 +11,8 @@ AI agents may only check off an item after:
 
 ## P0 - Project Control
 
-- [ ] Configure GitHub Pages static export and deployment workflow for Phase 1.
-- [ ] Decide whether the Next.js app fully replaces the original `index.html` landing page.
+- [x] Configure GitHub Pages static export and deployment workflow for Phase 1.
+- [x] Decide whether the Next.js app fully replaces the original `index.html` landing page.
 - [ ] Remove committed/local `.DS_Store` files from the working tree and keep them ignored.
 - [ ] Commit the current Phase 1 scaffold after docs and verification are clean.
 

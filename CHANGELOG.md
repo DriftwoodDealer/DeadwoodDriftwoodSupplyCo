@@ -19,6 +19,7 @@ This project uses semantic versioning through the `version` field in `package.js
 - Added homepage curated preview, tighter mobile hero spacing, treatment learn-more affordance, and provenance/plaque language.
 - Moved treatment protocol content out of the general shop and into the Reptile & Bioactive flow only.
 - Added selected AI mock imagery as section features for Reptile & Bioactive and Taxidermy.
+- Retired the original static `index.html` landing page in favor of the Next.js storefront.
 
 ### Verified
 

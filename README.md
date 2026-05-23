@@ -15,7 +15,7 @@ The longer vision is documented in [Roadmap.md](Roadmap.md). Raw notes and unfil
   - `/admin`
 - `/admin/settings`
 - Inventory is mocked in `lib/mock-inventory.ts`.
-- The original static landing page still exists as `index.html`.
+- The original static landing page has been retired; the Next.js app is the public storefront.
 - Phase 1 deployment is configured as a GitHub Pages static export.
 
 ## Core Sections
