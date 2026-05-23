@@ -32,6 +32,7 @@ AI agents may only check off an item after:
 - [ ] Protect `/admin` before any real operational controls are added.
 - [ ] Draft the first inventory fields for the listing composer.
 - [ ] Add a clear distinction between draft, published, sold, archived, and private preview.
+- [ ] Define private field-lookout app requirements for custom request submissions visible only to Mark and John.
 
 ## P3 - Content, Media, and Brand
 
@@ -40,6 +41,8 @@ AI agents may only check off an item after:
 - [ ] Add real product/media placeholders so the shop no longer reuses the hero image for every item.
 - [ ] Decide whether articles, field notes, and provenance stories belong in Phase 2 or Phase 3.
 - [ ] Define stringent wholesale verification requirements before building account access.
+- [ ] Define provenance engraving and custom plaque options for Vault art and large landscaping pieces.
+- [ ] Create a future treatment-process page with steps and video once real media exists.
 
 ## Backlog
 

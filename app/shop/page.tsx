@@ -38,8 +38,8 @@ export default function ShopPage() {
           Wholesale
         </a>
         <a href="/custom-requests">
-          <span>Field Lookout</span>
-          Custom Requests
+          <span>Custom Sourcing</span>
+          Requests
         </a>
       </nav>
 
@@ -95,32 +95,6 @@ export default function ShopPage() {
         </div>
       </section>
 
-      <section className="store-section protocol-band" aria-labelledby="protocol-heading">
-        <div>
-          <p className="eyebrow">Treatment Protocol</p>
-          <h2 id="protocol-heading" className="section-heading">
-            River-wild form. Controlled, documented prep.
-          </h2>
-        </div>
-        <div className="protocol-steps">
-          <div>
-            <span>01</span>
-            <strong>Power washed</strong>
-            <p>River silt and loose material are removed without flattening the patina.</p>
-          </div>
-          <div>
-            <span>02</span>
-            <strong>Heat treated</strong>
-            <p>Every piece is heated to 275 degrees for 4+ hours before release.</p>
-          </div>
-          <div>
-            <span>03</span>
-            <strong>Cataloged</strong>
-            <p>Future records can hold photos, video, GPS, treatment notes, and fit data.</p>
-          </div>
-        </div>
-      </section>
-
       <section className="store-section" aria-labelledby="vault-heading">
         <div className="split-intro compact">
           <div>
@@ -131,7 +105,8 @@ export default function ShopPage() {
           </div>
           <p className="section-copy">
             Vault pieces are the standout forms: extra photos, optional video, GPS when it
-            makes sense, and a richer detail view when the backend is ready.
+            makes sense, and a richer detail view when the backend is ready. Select art
+            pieces can carry engraved provenance with latitude, longitude, and river notes.
           </p>
         </div>
 
@@ -218,11 +193,11 @@ export default function ShopPage() {
           </div>
         </div>
 
-      <div className="grid">
-        {items.map((item) => (
-          <ProductCard key={item.id} item={item} />
-        ))}
-      </div>
+        <div className="grid">
+          {items.map((item) => (
+            <ProductCard key={item.id} item={item} />
+          ))}
+        </div>
       </section>
     </section>
   );

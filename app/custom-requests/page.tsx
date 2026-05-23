@@ -5,12 +5,13 @@ export default function CustomRequestsPage() {
     <section className="page-shell">
       <div className="shop-hero">
         <div>
-          <p className="eyebrow">Field Lookout</p>
+          <p className="eyebrow">Custom Sourcing</p>
           <h1 className="section-heading">Tell us what shape to watch for.</h1>
         </div>
         <p className="section-copy">
-          Custom requests are not ordinary orders. They become field notes for future
-          scavenging: dimensions, shape, use case, finish expectations, and urgency.
+          Tell us what you need, and we will watch the river for it. Dimensions,
+          shape, use case, finish expectations, and urgency become private notes for
+          future scavenging.
         </p>
       </div>
 
@@ -18,7 +19,7 @@ export default function CustomRequestsPage() {
         <div>
           <p className="eyebrow">Request Flow</p>
           <h2 id="request-flow-heading" className="section-heading">
-            From buyer need to river lookout.
+            Turn a buyer request into a private sourcing note.
           </h2>
         </div>
         <div className="protocol-steps">
@@ -35,7 +36,7 @@ export default function CustomRequestsPage() {
           <div>
             <span>03</span>
             <strong>Track the lookout</strong>
-            <p>Approved requests become an internal list for future river walks.</p>
+            <p>Approved requests feed a private lookout list only Mark and John can review.</p>
           </div>
         </div>
       </section>

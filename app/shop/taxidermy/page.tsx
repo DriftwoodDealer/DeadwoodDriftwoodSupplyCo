@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { SectorPage } from "@/components/portal/sector-page";
 import { getSectorBySlug } from "@/lib/mock-inventory";
 
@@ -10,6 +11,25 @@ export default function TaxidermyShopPage() {
 
   return (
     <SectorPage sector={sector}>
+      <section className="store-section section-feature" aria-label="Taxidermy display study">
+        <div className="section-feature-media glass-panel">
+          <Image
+            src="/assets/sections/taxidermy/taxidermy-bass-driftwood.png"
+            alt="Bass taxidermy mount staged on driftwood"
+            width={1536}
+            height={1024}
+          />
+        </div>
+        <div className="section-feature-copy">
+          <p className="eyebrow">Display Study</p>
+          <h2 className="section-heading">A mount needs a stage, not a prop.</h2>
+          <p className="section-copy">
+            Taxidermy pieces should support the animal, shape the silhouette, and look
+            like they belong to the same waterline, bank, or field story.
+          </p>
+        </div>
+      </section>
+
       <section className="store-section protocol-band" aria-labelledby="taxidermy-fit">
         <div>
           <p className="eyebrow">Mount Fit</p>

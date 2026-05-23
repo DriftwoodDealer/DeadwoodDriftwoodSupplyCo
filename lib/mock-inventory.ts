@@ -92,7 +92,7 @@ export const sectors: Sector[] = [
     name: "Landscaping",
     eyebrow: "Exterior Hardscape",
     description:
-      "Large river forms for estate gardens, entry moments, water features, commercial interiors, and outdoor sculptural placement.",
+      "Large river forms for estate gardens, entry moments, water features, commercial interiors, and outdoor sculptural placement, with custom plaque options for select installs.",
     cta: "View landscape forms",
     aliases: ["Landscaping"]
   },
@@ -110,7 +110,7 @@ export const sectors: Sector[] = [
     name: "Sculptural Relics",
     eyebrow: "Gallery Material",
     description:
-      "Collector-grade pieces that read as natural sculpture first, with Vault-level photography, video, and provenance when available.",
+      "Collector-grade pieces that read as natural sculpture first, with Vault-level photography, video, and engraved provenance when available.",
     cta: "Enter The Vault",
     aliases: ["Sculptural Relics", "Private Gallery", "Relic Collection"]
   }

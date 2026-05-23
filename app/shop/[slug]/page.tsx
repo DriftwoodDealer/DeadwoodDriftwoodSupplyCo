@@ -24,6 +24,10 @@ export default async function ProductPage({ params }: ProductPageProps) {
     notFound();
   }
 
+  const showBioactiveTreatment = item.sectors.some((sector) =>
+    ["Reptile", "Aquariums"].includes(sector)
+  );
+
   return (
     <section className="page-shell">
       <div className="detail-layout">
@@ -79,8 +83,12 @@ export default async function ProductPage({ params }: ProductPageProps) {
           <h2 className="product-title">Visual Provenance</h2>
           <p className="section-copy">{item.provenance}</p>
 
-          <h2 className="product-title">Bio-Sanctity</h2>
-          <p className="section-copy">{item.bioSanctity}</p>
+          {showBioactiveTreatment ? (
+            <>
+              <h2 className="product-title">Bioactive Treatment</h2>
+              <p className="section-copy">{item.bioSanctity}</p>
+            </>
+          ) : null}
 
           <div className="button-row">
             <Link className="button primary" href="/shop">

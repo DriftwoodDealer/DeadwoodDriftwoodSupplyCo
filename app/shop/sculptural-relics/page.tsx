@@ -21,7 +21,8 @@ export default function SculpturalRelicsPage() {
           </div>
           <p className="section-copy">
             These pieces get treated like collectible natural sculpture: tighter curation,
-            richer media, provenance notes, and inquiry-first placement.
+            richer media, provenance notes, and inquiry-first placement. Select works can
+            include engraved latitude, longitude, collection notes, or a discreet origin mark.
           </p>
         </div>
 

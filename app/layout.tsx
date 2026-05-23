@@ -12,7 +12,8 @@ const navItems = [
   { href: "/", label: "Home" },
   { href: "/shop", label: "Shop" },
   { href: "/wholesale", label: "Wholesale" },
-  { href: "/admin", label: "Admin" }
+  { href: "/custom-requests", label: "Custom Sourcing", className: "site-nav-accent" },
+  { href: "/admin", label: "Admin", className: "site-nav-accent" }
 ];
 
 export default function RootLayout({
@@ -29,7 +30,7 @@ export default function RootLayout({
           </Link>
           <nav className="site-nav" aria-label="Primary navigation">
             {navItems.map((item) => (
-              <Link key={item.href} href={item.href}>
+              <Link key={item.href} href={item.href} className={item.className}>
                 {item.label}
               </Link>
             ))}

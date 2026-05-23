@@ -16,6 +16,10 @@ export default function LandscapingShopPage() {
           <h2 id="landscape-protocol" className="section-heading">
             Big pieces need real-world context.
           </h2>
+          <p className="section-copy">
+            Larger installs can include a fitted plaque with a family name, house number,
+            property marker, or quiet provenance detail.
+          </p>
         </div>
         <div className="protocol-steps">
           <div>

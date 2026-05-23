@@ -14,6 +14,11 @@ This project uses semantic versioning through the `version` field in `package.js
 - GitHub Pages static export configuration and deployment workflow.
 - Dedicated static pages for sector shopping, wholesale verification preview, and custom request preview.
 - Push guard now checks the active GitHub account against the remote owner before pushing.
+- Refined custom request language around private field targets and captured future lookout-list workflow.
+- Homepage now points into the real sector, wholesale, and custom request routes instead of test/admin preview CTAs.
+- Added homepage curated preview, tighter mobile hero spacing, treatment learn-more affordance, and provenance/plaque language.
+- Moved treatment protocol content out of the general shop and into the Reptile & Bioactive flow only.
+- Added selected AI mock imagery as section features for Reptile & Bioactive and Taxidermy.
 
 ### Verified
 
