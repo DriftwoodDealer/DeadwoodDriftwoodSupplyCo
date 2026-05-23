@@ -13,12 +13,12 @@ AI agents may only check off an item after:
 
 - [x] Configure GitHub Pages static export and deployment workflow for Phase 1.
 - [x] Decide whether the Next.js app fully replaces the original `index.html` landing page.
-- [ ] Remove committed/local `.DS_Store` files from the working tree and keep them ignored.
-- [ ] Commit the current Phase 1 scaffold after docs and verification are clean.
+- [x] Remove committed/local `.DS_Store` files from the working tree and keep them ignored.
+- [x] Commit the current Phase 1 scaffold after docs and verification are clean.
 
 ## P1 - Public Storefront
 
-- [ ] Finalize the four public sectors: Reptile, Landscaping, Taxidermy, and Fine Art / Sculptural Relics.
+- [x] Finalize the four public sectors: Reptile, Landscaping, Taxidermy, and Sculptural Relics.
 - [ ] Add curated sector browsing/navigation to `/shop`.
 - [ ] Split storefront into dedicated static pages for sectors, wholesale, and custom requests.
 - [ ] Update mock inventory so every primary sector has at least one representative item.
@@ -37,7 +37,7 @@ AI agents may only check off an item after:
 ## P3 - Content, Media, and Brand
 
 - [ ] Gather canonical brand assets: logo, hero images, product photos, preferred color references.
-- [ ] Decide whether the fourth sector should be named `Fine Art`, `Sculptural Relics`, or another public-facing label.
+- [x] Decide whether the fourth sector should be named `Fine Art`, `Sculptural Relics`, or another public-facing label.
 - [ ] Add real product/media placeholders so the shop no longer reuses the hero image for every item.
 - [ ] Decide whether articles, field notes, and provenance stories belong in Phase 2 or Phase 3.
 - [ ] Define stringent wholesale verification requirements before building account access.

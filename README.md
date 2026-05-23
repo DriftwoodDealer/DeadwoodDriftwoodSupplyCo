@@ -25,7 +25,7 @@ The public shop should support these primary sectors:
 - Reptile
 - Landscaping
 - Taxidermy
-- Fine Art / Sculptural Relics
+- Sculptural Relics
 
 Items may belong to more than one sector.
 
