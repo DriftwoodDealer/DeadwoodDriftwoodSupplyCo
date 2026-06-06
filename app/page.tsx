@@ -8,33 +8,16 @@ export default function HomePage() {
 
   return (
     <>
-      <section className="hero-stage">
+      <section className="hero-stage home-hero">
         <div className="hero-image-band">
           <Image
-            src="/assets/images/alternate-deadwood-design.png"
-            alt="DEADWOOD driftwood supply visual mark"
-            width={1600}
-            height={900}
+            src="/assets/images/DEADWOODdark.png"
+            alt="Deadwood driftwood hero artwork"
+            width={3344}
+            height={1882}
             priority
           />
         </div>
-
-        <div className="hero-card glass-panel">
-          <p className="eyebrow">Missouri River Relics</p>
-          <h1 className="hero-title">Deadwood</h1>
-          <p className="hero-copy">
-            Field-sourced driftwood for bioactive reptile spaces, taxidermy staging,
-            estate hardscape, and sculptural interiors.
-          </p>
-
-          <div className="hero-sector-strip" aria-label="Primary sectors">
-            <span>Reptile</span>
-            <span>Taxidermy</span>
-            <span>Landscaping</span>
-            <span>Sculptural Relics</span>
-          </div>
-        </div>
-
       </section>
 
       <section className="page-shell home-entry">
@@ -99,17 +82,21 @@ export default function HomePage() {
       </section>
 
       <footer className="home-footer" aria-label="Site footer">
-        <div className="home-footer-brand">DEADWOOD: DRIFTWOOD SUPPLY CO. LLC</div>
-        <div className="home-footer-links">
-          <a href="#">Terms</a>
-          <a href="#">Privacy</a>
-          <a href="#">Shipping</a>
-          <a href="#">Contact</a>
-        </div>
-        <div className="home-footer-contact">
-          <a href="mailto:contact@deadwooddriftwood.com">contact@deadwooddriftwood.com</a>
-          <a href="tel:+15735550198">(573) 555-0198</a>
-          <span>© 2026 DEADWOOD. All rights reserved.</span>
+        <div className="home-footer-content">
+          <div className="home-footer-brand">DEADWOOD: DRIFTWOOD SUPPLY CO. LLC</div>
+          <a className="home-footer-email" href="mailto:deadwooddriftwood@gmail.com">
+            deadwooddriftwood@gmail.com
+          </a>
+          <div className="home-footer-links">
+            <Link href="/terms">Terms</Link>
+            <span aria-hidden="true">|</span>
+            <Link href="/privacy">Privacy</Link>
+            <span aria-hidden="true">|</span>
+            <Link href="/shipping">Shipping</Link>
+            <span aria-hidden="true">|</span>
+            <Link href="/contact">Contact</Link>
+          </div>
+          <div className="home-footer-rights">© 2026 DEADWOOD. All rights reserved.</div>
         </div>
       </footer>
     </>

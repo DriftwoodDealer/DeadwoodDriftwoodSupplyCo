@@ -23,9 +23,9 @@ body {
   margin: 0;
   overflow-x: hidden;
   background:
-    radial-gradient(circle at 18% 12%, rgba(180, 122, 69, 0.14), transparent 28rem),
-    radial-gradient(circle at 82% 18%, rgba(109, 135, 146, 0.12), transparent 26rem),
-    linear-gradient(180deg, #090909 0%, #050505 44%, #080705 100%);
+    radial-gradient(circle at 18% 8%, rgba(97, 88, 68, 0.16), transparent 30rem),
+    radial-gradient(circle at 82% 16%, rgba(52, 56, 52, 0.18), transparent 28rem),
+    linear-gradient(180deg, #040709 0%, #0d0e0e 42%, #15140f 74%, #050505 100%);
   color: var(--ash);
   font-family:
     ui-sans-serif,
@@ -34,6 +34,10 @@ body {
     BlinkMacSystemFont,
     "Segoe UI",
     sans-serif;
+}
+
+body:has(.home-hero) {
+  background: #000;
 }
 
 a {
@@ -65,6 +69,15 @@ img {
   backdrop-filter: blur(18px);
 }
 
+body:has(.home-hero) .site-header {
+  position: fixed;
+  border-bottom-color: rgba(255, 255, 255, 0.06);
+  background:
+    linear-gradient(90deg, rgba(5, 5, 5, 0.88), rgba(30, 24, 19, 0.76) 46%, rgba(5, 5, 5, 0.88)),
+    rgba(5, 5, 5, 0.86);
+  backdrop-filter: blur(18px);
+}
+
 .brand-mark {
   color: #fff;
   font-size: 0.86rem;
@@ -78,6 +91,12 @@ img {
   align-items: center;
   gap: 0.35rem;
   padding: 0.35rem;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: rgba(8, 8, 8, 0.72);
+}
+
+body:has(.home-hero) .site-nav {
   border: 1px solid var(--line);
   border-radius: 999px;
   background: rgba(8, 8, 8, 0.72);
@@ -115,11 +134,27 @@ img {
   padding-bottom: 4rem;
 }
 
+.home-hero {
+  min-height: auto;
+  padding-top: 72px;
+  padding-bottom: 0;
+}
+
 .hero-image-band {
   position: relative;
   height: min(52vh, 520px);
   overflow: hidden;
   background: #000;
+}
+
+.home-hero .hero-image-band {
+  display: grid;
+  place-items: center;
+  width: min(2080px, 100%);
+  height: auto;
+  padding-inline: 0;
+  margin-inline: auto;
+  background: transparent;
 }
 
 .hero-image-band img {
@@ -130,6 +165,23 @@ img {
   filter: brightness(1.1);
 }
 
+.home-hero .hero-image-band img {
+  width: min(2080px, calc(100vw - 0.5rem));
+  height: auto;
+  max-height: min(92vh, 1040px);
+  object-fit: contain;
+  opacity: 1;
+  filter: brightness(0.84) contrast(1.08) saturate(0.74);
+  mask-image:
+    linear-gradient(90deg, transparent 0%, #000 5%, #000 95%, transparent 100%),
+    linear-gradient(180deg, transparent 0%, #000 6%, #000 94%, transparent 100%);
+  mask-composite: intersect;
+  -webkit-mask-image:
+    linear-gradient(90deg, transparent 0%, #000 5%, #000 95%, transparent 100%),
+    linear-gradient(180deg, transparent 0%, #000 6%, #000 94%, transparent 100%);
+  -webkit-mask-composite: source-in;
+}
+
 .hero-image-band::after {
   position: absolute;
   inset: 0;
@@ -137,6 +189,10 @@ img {
   background:
     linear-gradient(180deg, transparent 0%, rgba(5, 5, 5, 0.2) 52%, #050505 100%),
     rgba(0, 0, 0, 0.1);
+}
+
+.home-hero .hero-image-band::after {
+  background: none;
 }
 
 .glass-panel {
@@ -766,6 +822,7 @@ img {
 }
 
 .home-entry {
+  width: min(1440px, calc(100% - 320px));
   padding-top: 0;
 }
 
@@ -811,22 +868,49 @@ img {
 }
 
 .home-footer {
+  position: relative;
   display: grid;
-  grid-template-columns: 1.2fr auto 1.2fr;
-  gap: 1rem;
+  grid-template-columns: 1fr;
   align-items: center;
-  width: min(1160px, calc(100% - 32px));
-  margin: 0 auto;
-  padding: 1.2rem 0 2rem;
-  border-top: 1px solid var(--line);
-  color: rgba(216, 210, 198, 0.58);
-  font-size: 0.68rem;
+  justify-items: end;
+  overflow: hidden;
+  width: min(1440px, calc(100% - 320px));
+  aspect-ratio: 1675 / 250;
+  margin: 1.5rem auto 0;
+  padding: clamp(1rem, 2vw, 2rem) clamp(1.2rem, 4vw, 4rem);
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  color: rgba(216, 210, 198, 0.66);
+  font-size: 0.72rem;
   letter-spacing: 0.12em;
+  line-height: 1.7;
+  text-align: right;
   text-transform: uppercase;
 }
 
+.home-footer::before {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  content: "";
+  background: url("/assets/images/DEADWOODFOOTER.png") center / 100% 100% no-repeat;
+}
+
+.home-footer::after {
+  content: none;
+}
+
+.home-footer-content {
+  position: relative;
+  z-index: 2;
+  display: grid;
+  gap: 0.55rem;
+  justify-items: end;
+  max-width: min(100%, 35rem);
+}
+
 .home-footer a {
-  color: inherit;
+  color: rgba(204, 143, 88, 0.9);
 }
 
 .home-footer-brand {
@@ -834,20 +918,21 @@ img {
   font-weight: 600;
 }
 
-.home-footer-links,
-.home-footer-contact {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.8rem;
-  align-items: center;
+.home-footer-email,
+.home-footer-links {
+  color: rgba(204, 143, 88, 0.9);
 }
 
 .home-footer-links {
-  justify-content: center;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+  align-items: center;
+  justify-content: flex-end;
 }
 
-.home-footer-contact {
-  justify-content: flex-end;
+.home-footer-rights {
+  color: rgba(216, 210, 198, 0.66);
 }
 
 .product-card {
@@ -1079,23 +1164,38 @@ img {
     height: 36vh;
   }
 
+  .home-hero .hero-image-band {
+    width: 100%;
+    padding-inline: 0.35rem;
+  }
+
   .hero-stage {
     min-height: auto;
     padding-bottom: 2.2rem;
+  }
+
+  .home-hero {
+    padding-top: 120px;
+    padding-bottom: 0;
   }
 
   .hero-card {
     margin-top: -3rem;
   }
 
-  .home-footer {
-    grid-template-columns: 1fr;
-    text-align: center;
+  .home-entry {
+    width: min(1160px, calc(100% - 32px));
   }
 
-  .home-footer-links,
-  .home-footer-contact {
-    justify-content: center;
+  .home-footer {
+    width: min(1160px, calc(100% - 32px));
+    grid-template-columns: 1fr;
+    justify-items: end;
+    text-align: right;
+  }
+
+  .home-footer-links {
+    justify-content: flex-end;
   }
 
   .shop-hero,
