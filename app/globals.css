@@ -1470,7 +1470,7 @@ body:has(.home-hero) .site-nav {
 
 .home-sector-grid {
   display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 1rem;
 }
 
@@ -1507,6 +1507,20 @@ body:has(.home-hero) .site-nav {
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 1rem;
   margin-top: 1rem;
+}
+
+.home-feature-video {
+  width: 100vw;
+  margin: clamp(2rem, 4vw, 3.25rem) calc(50% - 50vw) 0;
+  overflow: hidden;
+  background: #000;
+}
+
+.home-feature-video-media {
+  display: block;
+  width: 100%;
+  height: clamp(130px, 18vw, 220px);
+  object-fit: cover;
 }
 
 .home-footer {

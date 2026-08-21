@@ -60,6 +60,20 @@ export default function HomePage() {
           </Link>
         </div>
 
+        <section className="home-feature-video" aria-label="Deadwood river archive film">
+          <video
+            className="home-feature-video-media"
+            autoPlay
+            muted
+            loop
+            playsInline
+            preload="metadata"
+            aria-label="Deadwood river archive film"
+          >
+            <source src="/assets/videos/vid.mp4" type="video/mp4" />
+          </video>
+        </section>
+
         <section className="store-section" aria-labelledby="home-river-archive">
           <div className="section-bar">
             <div>

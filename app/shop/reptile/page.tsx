@@ -1,7 +1,10 @@
 import Image from "next/image";
-import { SectorPage } from "@/components/portal/sector-page";
-import { ReptileSizeStory } from "@/components/portal/reptile-size-story";
-import { getSectorBySlug } from "@/lib/mock-inventory";
+import Link from "next/link";
+import { ProductCard } from "@/components/portal/product-card";
+import { ReptileTierCards } from "@/components/portal/reptile-tier-cards";
+import { TreatmentProcess } from "@/components/portal/treatment-process";
+import { getInventoryBySector, getSectorBySlug } from "@/lib/mock-inventory";
+import styles from "@/components/portal/reptile-page.module.css";
 
 export default function ReptileShopPage() {
   const sector = getSectorBySlug("reptile");
@@ -10,60 +13,59 @@ export default function ReptileShopPage() {
     return null;
   }
 
+  const items = getInventoryBySector(sector);
+
   return (
-    <SectorPage sector={sector}>
-      <section className="store-section reptile-study glass-panel" aria-label="Reptile display study">
+    <main className={styles.page}>
+      <section className={styles.hero} aria-label="River-worn driftwood hero">
         <Image
-          src="/assets/sections/reptile-bioactive/reptile-gecko-driftwood.png"
-          alt="Gecko on sculptural driftwood for a bioactive reptile display"
-          width={1280}
-          height={1024}
-          className="reptile-study-image"
+          src="/assets/reptile/deadwoodReptileHero.png"
+          alt="River-worn driftwood hero artwork"
+          width={2880}
+          height={1620}
           priority
+          sizes="100vw"
+          className={styles.heroImage}
         />
-        <div className="reptile-study-copy">
-          <p className="eyebrow">Bioactive Study</p>
-          <h2 className="section-heading">Wood that feels built into the habitat.</h2>
-          <p className="section-copy">
-            Reptile pieces should read as structure, shelter, climbing line, and visual
-            anchor. The best ones feel like the enclosure formed around them.
-          </p>
+      </section>
+
+      <ReptileTierCards />
+
+      <TreatmentProcess />
+
+      <section className={styles.inventory} aria-labelledby="reptile-inventory">
+        <div className="section-bar">
+          <div>
+            <p className="eyebrow">Available Forms</p>
+            <h2 id="reptile-inventory" className="product-title">
+              Current {sector.name} inventory
+            </h2>
+          </div>
+          <Link className="button" href="/shop">
+            Shop Overview
+          </Link>
+        </div>
+
+        <div className={styles.inventoryGrid}>
+          {items.map((item) => (
+            <ProductCard key={item.id} item={item} />
+          ))}
         </div>
       </section>
 
-      <ReptileSizeStory />
-
-      <section
-        className="store-section protocol-band treatment-band"
-        aria-labelledby="reptile-treatment-heading"
-      >
-        <div>
-          <p className="eyebrow">Bioactive Treatment</p>
-          <h2 id="reptile-treatment-heading" className="section-heading">
-            Prepared for living enclosures.
-          </h2>
-          <a className="button protocol-link" href="/custom-requests">
-            Learn More
-          </a>
-        </div>
-        <div className="protocol-steps">
-          <div>
-            <span>01</span>
-            <strong>Power washed</strong>
-            <p>River silt and loose material are removed without flattening the patina.</p>
-          </div>
-          <div>
-            <span>02</span>
-            <strong>Heat treated</strong>
-            <p>Pieces for bioactive use are heated to 275 degrees for 4+ hours.</p>
-          </div>
-          <div>
-            <span>03</span>
-            <strong>Cataloged</strong>
-            <p>Future records can hold photos, video, treatment notes, and fit data.</p>
-          </div>
-        </div>
+      <section className={styles.divider} aria-label="River-worn driftwood forms">
+        <video
+          className={styles.dividerVideo}
+          autoPlay
+          muted
+          loop
+          playsInline
+          preload="metadata"
+          aria-label="River-worn driftwood forms"
+        >
+          <source src="/assets/dividers/deadwoodReptile.mp4" type="video/mp4" />
+        </video>
       </section>
-    </SectorPage>
+    </main>
   );
 }
