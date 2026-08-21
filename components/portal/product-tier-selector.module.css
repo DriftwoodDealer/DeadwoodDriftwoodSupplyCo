@@ -1,0 +1,36 @@
+.section {
+  width: min(1400px, calc(100% - 32px));
+  margin: clamp(2.5rem, 7vw, 6.5rem) auto 0;
+}
+
+.heading { max-width: 43rem; margin: 0 0 1.5rem 1rem; }
+.heading h2 { max-width: 30rem; margin: 0.45rem 0 0.8rem; color: #f1ede4; font-size: clamp(2.3rem, 5vw, 5.2rem); font-weight: 350; letter-spacing: -0.065em; line-height: 0.92; }
+.heading > p:last-child { max-width: 32rem; margin: 0; color: var(--muted); font-size: 0.95rem; line-height: 1.6; }
+
+.grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0.7rem; }
+.card { position: relative; isolation: isolate; display: flex; min-height: clamp(19rem, 35vw, 31rem); overflow: hidden; background-color: #090909; background-position: center; background-repeat: no-repeat; background-size: cover; box-shadow: inset 0 0 0 1px rgba(255,255,255,.1); }
+.card:hover { box-shadow: inset 0 0 0 1px rgba(180,122,69,.8); }
+.cardShade { position: absolute; z-index: -1; inset: 0; background: linear-gradient(90deg, rgba(0,0,0,.7) 0%, rgba(0,0,0,.14) 60%, rgba(0,0,0,.34)), linear-gradient(0deg, rgba(0,0,0,.85), transparent 58%); transition: background .35s ease; }
+.card:hover .cardShade { background: linear-gradient(90deg, rgba(0,0,0,.58), rgba(0,0,0,.08) 62%, rgba(0,0,0,.25)), linear-gradient(0deg, rgba(0,0,0,.88), transparent 62%); }
+.cardContent { position: relative; z-index: 1; display: flex; flex: 1; flex-direction: column; align-items: flex-start; justify-content: flex-end; padding: clamp(1.25rem, 3vw, 2.5rem); }
+.size { margin: 0 0 .5rem; color: var(--copper); font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: .68rem; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; }
+.card h3 { max-width: 90%; margin: 0; color: #fff; font-size: clamp(2.55rem, 6vw, 6.7rem); font-weight: 350; letter-spacing: -.08em; line-height: .79; text-shadow: 0 .15rem 1rem rgba(0,0,0,.45); }
+.designation { position: absolute; top: 1.45rem; right: 1rem; z-index: 1; color: rgba(255,255,255,.78); font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: .6rem; letter-spacing: .14em; text-transform: uppercase; writing-mode: vertical-rl; }
+.cta, .mailLink, .copyButton { display: inline-flex; align-items: center; gap: .7rem; min-height: 2.7rem; margin-top: 1.5rem; padding: .7rem .9rem; border: 1px solid rgba(216,210,198,.28); border-radius: 0; background: rgba(8,8,8,.56); color: #fff; font: inherit; font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: .64rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; cursor: pointer; backdrop-filter: blur(10px); transition: background .2s ease, border-color .2s ease, color .2s ease, transform .2s ease; }
+.cta:hover, .mailLink:hover, .copyButton:hover { border-color: var(--copper); background: rgba(180,122,69,.22); color: #fff; transform: translateY(-2px); }
+.cta:focus-visible, .mailLink:focus-visible, .copyButton:focus-visible, .close:focus-visible { outline: 2px solid #f1ede4; outline-offset: 3px; }
+.treeCard { grid-column: 1 / -1; min-height: clamp(23rem, 42vw, 37rem); background-position: center 44%; }
+.treeCard h3 { font-size: clamp(3rem, 8.8vw, 9.4rem); }
+
+.backdrop { position: fixed; z-index: 100; inset: 0; display: grid; place-items: center; padding: 1rem; background: rgba(0,0,0,.76); }
+.dialog { position: relative; width: min(100%, 34rem); padding: clamp(2rem, 6vw, 3.5rem); border: 1px solid rgba(180,122,69,.65); background: linear-gradient(145deg, #1b1712, #0a0a09); box-shadow: 0 1.5rem 6rem rgba(0,0,0,.7); }
+.dialog h2 { max-width: 24rem; margin: .7rem 0; color: #f1ede4; font-size: clamp(2rem, 7vw, 3.5rem); font-weight: 350; letter-spacing: -.055em; line-height: .96; }
+.dialog > p:not(.copyStatus) { max-width: 29rem; color: var(--ash); line-height: 1.6; }
+.close { position: absolute; top: .75rem; right: .85rem; border: 0; background: transparent; color: var(--ash); font-size: 2rem; line-height: 1; cursor: pointer; }
+.dialogActions { display: flex; flex-wrap: wrap; gap: .65rem; margin-top: 1.65rem; }
+.mailLink, .copyButton { margin-top: 0; }
+.copyStatus { min-height: 1.2rem; margin: .8rem 0 0; color: var(--copper); font-size: .78rem; }
+
+@media (max-width: 680px) { .section { width: min(100% - 20px, 1400px); } .heading { margin-left: .2rem; } .grid { grid-template-columns: 1fr; gap: .5rem; } .card, .treeCard { min-height: 27rem; grid-column: auto; background-position: center; } .card h3, .treeCard h3 { font-size: clamp(3.1rem, 16vw, 5.4rem); } .designation { top: 1rem; right: .65rem; } }
+
+@media (prefers-reduced-motion: reduce) { .cardShade, .cta, .mailLink, .copyButton { transition: none; } }
