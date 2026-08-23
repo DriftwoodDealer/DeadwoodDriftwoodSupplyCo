@@ -1,27 +1,27 @@
 import Link from "next/link";
-import { inventoryItems } from "@/lib/mock-inventory";
+import { getAdminProducts } from "@/lib/admin-data";
 
-export default function AdminPage() {
-  const published = inventoryItems.filter((item) => item.status === "published").length;
-  const drafts = inventoryItems.filter((item) => item.status === "draft").length;
-  const total = inventoryItems.length;
+export default async function AdminPage() {
+  const products = await getAdminProducts();
+  const published = products.filter((item) => item.status === "published").length;
+  const drafts = products.filter((item) => ["draft", "ready_for_review"].includes(item.status)).length;
+  const total = products.length;
 
   return (
     <section className="page-shell admin-shell-root">
       <div className="admin-entry glass-panel">
         <div className="admin-entry-copy">
           <p className="eyebrow">Admin Sign-In</p>
-          <h1 className="section-heading">Enter the front-end CMS.</h1>
+          <h1 className="section-heading">Enter Deadwood CMS.</h1>
           <p className="section-copy">
-            This is the access hub. The real auth layer will eventually sit in front of this
-            route, but the UX path is already set up for admin-first editing on desktop or
-            phone.
+            This is the access hub for the protected workspace. Published inventory remains
+            separate from private drafts.
           </p>
         </div>
 
         <div className="admin-entry-actions">
           <Link className="button primary" href="/admin/cms">
-            Sign in as admin
+            Open Deadwood CMS
           </Link>
           <Link className="button" href="/admin/cms">
             Go to CMS
@@ -47,7 +47,7 @@ export default function AdminPage() {
       <div className="admin-link-grid">
         <Link className="admin-launch glass-panel" href="/admin/cms">
           <p className="eyebrow">CMS</p>
-          <h2>Inventory composer</h2>
+          <h2>Deadwood Listings</h2>
           <p>Create and edit listings, media, provenance, and publishing states.</p>
         </Link>
         <Link className="admin-launch glass-panel" href="/admin/settings">

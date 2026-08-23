@@ -13,7 +13,6 @@ const navItems = [
   { href: "/shop", label: "Shop" },
   { href: "/wholesale", label: "Wholesale" },
   { href: "/custom-requests", label: "Custom Sourcing", className: "site-nav-accent" },
-  { href: "/admin", label: "Admin", className: "site-nav-accent" }
 ];
 
 export default function RootLayout({

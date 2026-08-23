@@ -4,14 +4,18 @@ import {
   getInventoryBySector,
   getPublishedInventory,
   getVaultInventory,
-  sectors,
-  sizeClasses
-} from "@/lib/mock-inventory";
+  sectors
+} from "@/lib/inventory-data";
+import { sizeClasses } from "@/lib/mock-inventory";
+import Link from "next/link";
 
-export default function ShopPage() {
-  const items = getPublishedInventory();
-  const featuredItems = getFeaturedInventory();
-  const vaultItems = getVaultInventory();
+export default async function ShopPage() {
+  const [items, featuredItems, vaultItems] = await Promise.all([
+    getPublishedInventory(),
+    getFeaturedInventory(),
+    getVaultInventory()
+  ]);
+  const sectorItems = await Promise.all(sectors.map((sector) => getInventoryBySector(sector)));
 
   return (
     <section className="page-shell">
@@ -28,19 +32,19 @@ export default function ShopPage() {
 
       <nav className="sector-nav glass-panel" aria-label="Shop sections">
         {sectors.map((sector) => (
-          <a key={sector.slug} href={`/shop/${sector.slug}`}>
+          <Link key={sector.slug} href={`/shop/${sector.slug}`}>
             <span>{sector.eyebrow}</span>
             {sector.name}
-          </a>
+          </Link>
         ))}
-        <a href="/wholesale">
+        <Link href="/wholesale">
           <span>Verified Trade</span>
           Wholesale
-        </a>
-        <a href="/custom-requests">
+        </Link>
+        <Link href="/custom-requests">
           <span>Custom Sourcing</span>
           Requests
-        </a>
+        </Link>
       </nav>
 
       <section className="store-section" aria-labelledby="featured-heading">
@@ -61,9 +65,9 @@ export default function ShopPage() {
               <p className="product-kicker">{item.sector}</p>
               <h3>{item.title}</h3>
               <p>{item.bestFor}</p>
-              <a className="button primary" href={`/shop/${item.slug}`}>
+              <Link className="button primary" href={`/shop/${item.slug}`}>
                 Request Quote
-              </a>
+              </Link>
             </article>
           ))}
         </div>
@@ -132,22 +136,20 @@ export default function ShopPage() {
         </div>
 
         <div className="sector-sections">
-          {sectors.map((sector) => {
-            const sectorItems = getInventoryBySector(sector);
-
+          {sectors.map((sector, index) => {
             return (
               <article key={sector.slug} id={sector.slug} className="sector-section">
                 <div className="sector-copy">
                   <p className="eyebrow">{sector.eyebrow}</p>
                   <h3>{sector.name}</h3>
                   <p>{sector.description}</p>
-                  <a className="button" href={`/shop/${sector.slug}`}>
+                  <Link className="button" href={`/shop/${sector.slug}`}>
                     {sector.cta}
-                  </a>
+                  </Link>
                 </div>
 
                 <div className="sector-products">
-                  {sectorItems.slice(0, 2).map((item) => (
+                  {sectorItems[index].slice(0, 2).map((item) => (
                     <ProductCard key={item.id} item={item} />
                   ))}
                 </div>
@@ -186,9 +188,9 @@ export default function ShopPage() {
       <section className="store-section" aria-labelledby="catalog-heading">
         <div className="section-bar">
           <div>
-            <p className="eyebrow">Catalog Preview</p>
+            <p className="eyebrow">River Archive</p>
             <h2 id="catalog-heading" className="product-title">
-              Current mock inventory
+              Current published inventory
             </h2>
           </div>
         </div>

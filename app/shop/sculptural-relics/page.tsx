@@ -1,9 +1,10 @@
 import { SectorPage } from "@/components/portal/sector-page";
-import { getSectorBySlug, getVaultInventory } from "@/lib/mock-inventory";
+import { getSectorBySlug } from "@/lib/mock-inventory";
+import { getVaultInventory } from "@/lib/inventory-data";
 
-export default function SculpturalRelicsPage() {
+export default async function SculpturalRelicsPage() {
   const sector = getSectorBySlug("sculptural-relics");
-  const vaultItems = getVaultInventory();
+  const vaultItems = await getVaultInventory();
 
   if (!sector) {
     return null;

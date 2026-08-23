@@ -1,7 +1,8 @@
 import Link from "next/link";
-import { inventoryItems } from "@/lib/mock-inventory";
+import { getAdminProducts } from "@/lib/admin-data";
 
-export default function AdminInventoryPage() {
+export default async function AdminInventoryPage() {
+  const inventoryItems = await getAdminProducts();
   return (
     <section className="page-shell admin-shell-root">
       <div className="inventory-hub cms-panel">
@@ -29,14 +30,14 @@ export default function AdminInventoryPage() {
           {inventoryItems.map((item) => (
             <article key={item.id} className="inventory-row">
               <div>
-                <p className="eyebrow">{item.sector}</p>
+                <p className="eyebrow">{item.category}</p>
                 <h2>{item.title}</h2>
                 <p>{item.description}</p>
               </div>
               <div className="inventory-row-meta">
-                <span>{item.sizeClass}</span>
+                <span>{item.sku}</span>
                 <span>{item.status}</span>
-                <span>${item.price.toLocaleString()}</span>
+                <span>${(item.priceCents / 100).toLocaleString()}</span>
                 <Link className="button" href="/admin/cms">
                   Edit
                 </Link>

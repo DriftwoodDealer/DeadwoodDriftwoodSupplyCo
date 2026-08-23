@@ -11,6 +11,12 @@ AI agents may only check off an item after:
 
 ## P0 - Project Control
 
+### Phase 1 Verification Sign-off - 2026-08-22
+
+- [x] AI verification completed: typecheck, lint, build, and Playwright CMS flow passed.
+- [x] Human verification completed: CMS listing creation, media upload/order, publishing, public visibility, product gallery, empty-field hiding, Add to Cart, and Back to Shop behavior confirmed.
+- [ ] Production deployment and Vercel environment verification remain open.
+
 - [x] Configure GitHub Pages static export and deployment workflow for Phase 1.
 - [x] Decide whether the Next.js app fully replaces the original `index.html` landing page.
 - [x] Remove committed/local `.DS_Store` files from the working tree and keep them ignored.

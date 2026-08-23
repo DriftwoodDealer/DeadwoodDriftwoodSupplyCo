@@ -82,12 +82,14 @@ export const cmsSections: CmsSection[] = [
 ];
 
 export const inventoryStatusOptions: Array<{
-  value: InventoryStatus;
+  value: InventoryStatus | "ready_for_review" | "reserved";
   label: string;
   note: string;
 }> = [
   { value: "draft", label: "Draft", note: "Internal only, not public." },
+  { value: "ready_for_review", label: "Ready for review", note: "Awaiting approval." },
   { value: "published", label: "Published", note: "Visible on storefront." },
+  { value: "reserved", label: "Reserved", note: "Held for a checkout or private sale." },
   { value: "sold", label: "Sold", note: "Reserved or completed." },
   { value: "archived", label: "Archived", note: "Held back from active inventory." }
 ];

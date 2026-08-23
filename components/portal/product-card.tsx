@@ -18,7 +18,7 @@ export function ProductCard({ item }: ProductCardProps) {
         <h2 className="product-title">{item.title}</h2>
         <p className="product-description">{item.description}</p>
         <div className="product-meta">
-          <StatusPill status={item.sizeClass} />
+          {item.sizeClass ? <StatusPill status={item.sizeClass} /> : null}
           <StatusPill status={item.availability} />
           <StatusPill status={item.dimensions} />
         </div>

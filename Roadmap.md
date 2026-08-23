@@ -382,3 +382,15 @@ Build the backend and CMS in thin, testable slices. The first storefront can be 
 
 ***
 *Roadmap Authored by Mark Rosenthal & John Van Buren*
+
+## Current Implementation Reconciliation - 2026-08-22
+
+The original phase labels are historical and remain unchanged. The working implementation has advanced beyond the original sequencing:
+
+The planning-only execution order for production deployment and one-of-one commerce is documented in [docs/PHASE_2_ROADMAP.md](docs/PHASE_2_ROADMAP.md), with the supporting decisions in [docs/VERCEL_DEPLOY_PLAN.md](docs/VERCEL_DEPLOY_PLAN.md) and [docs/RESERVATION_ARCHITECTURE.md](docs/RESERVATION_ARCHITECTURE.md). Phase 2 is not marked complete.
+
+- Phase 1 foundation is implemented and manually verified: Next.js App Router, protected admin routes, public shop/detail routes, responsive editorial styling, and production build.
+- The Supabase/Auth portion of Phase 2 is implemented and verified: products, profiles, media, reservations, sourcing requests, Storage buckets, RLS, admin login, and published-only public reads.
+- The core listing-composer and media portions of Phase 3 are implemented and verified: draft/publish workflow, five-image gallery, optional video, ordering, preview, empty-field-safe product detail, and Playwright coverage.
+- Phase 3 remains open for editorial models, activity logging, true multi-sector placement, richer media metadata, and full mobile field testing.
+- The next planned work is production deployment/configuration, then cart/checkout and reservation behavior. Stripe, shipping, orders, and wholesale permissions are not implemented yet.

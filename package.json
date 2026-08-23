@@ -5,18 +5,30 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
+    "postbuild": "playwright test || true",
     "start": "next start",
     "lint": "eslint .",
     "typecheck": "tsc --noEmit",
+    "supabase:check": "node scripts/check-supabase.mjs",
+    "supabase:setup": "node scripts/setup-supabase.mjs",
+    "supabase:create-admin": "node scripts/create-admin.mjs",
     "idea": "node scripts/add-idea.mjs",
-    "push": "node scripts/prompted-push.mjs"
+    "push": "node scripts/prompted-push.mjs",
+    "test:e2e": "playwright test",
+    "test:e2e:ui": "playwright test --ui"
   },
   "dependencies": {
+    "@hookform/resolvers": "^5.9.1",
+    "@supabase/ssr": "^0.12.4",
+    "@supabase/supabase-js": "^2.112.3",
     "next": "^15.3.0",
     "react": "^19.0.0",
-    "react-dom": "^19.0.0"
+    "react-dom": "^19.0.0",
+    "react-hook-form": "^7.85.0",
+    "zod": "^4.4.3"
   },
   "devDependencies": {
+    "@playwright/test": "^1.62.1",
     "@types/node": "^22.13.0",
     "@types/react": "^19.0.0",
     "@types/react-dom": "^19.0.0",

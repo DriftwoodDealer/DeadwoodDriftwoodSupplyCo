@@ -1,9 +1,13 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  output: "export",
-  trailingSlash: true,
+  experimental: {
+    serverActions: {
+      bodySizeLimit: "10mb"
+    }
+  },
   images: {
-    remotePatterns: [],
+    domains: ["dkrsgkoxafribdkcnbbl.supabase.co"],
+    remotePatterns: [{ protocol: "https", hostname: "dkrsgkoxafribdkcnbbl.supabase.co", pathname: "/storage/v1/object/public/**" }],
     unoptimized: true
   }
 };

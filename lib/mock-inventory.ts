@@ -17,7 +17,7 @@ export type InventoryItem = {
   title: string;
   sector: string;
   sectors: string[];
-  sizeClass: SizeClass;
+  sizeClass?: SizeClass | string;
   price: number;
   status: InventoryStatus;
   availability: string;
@@ -32,6 +32,8 @@ export type InventoryItem = {
   provenance: string;
   bioSanctity: string;
   bestFor: string;
+  media?: string[];
+  videoUrl?: string;
 };
 
 export const sizeClasses: Array<{

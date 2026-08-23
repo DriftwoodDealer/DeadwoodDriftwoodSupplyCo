@@ -1,279 +1,71 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useTransition, type ChangeEvent, type DragEvent } from "react";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { z } from "zod";
 import Link from "next/link";
-import { inventoryItems, sizeClasses } from "@/lib/mock-inventory";
-import {
-  cmsCategoryOptions,
-  cmsDraftFields,
-  cmsSections,
-  cmsSizeOptions,
-  inventoryStatusOptions
-} from "@/lib/cms-spec";
+import { deleteProduct, saveProduct } from "@/app/admin/cms/actions";
+import type { AdminProduct } from "@/lib/admin-data";
 
-const composerHighlights = [
-  {
-    title: "Phone-first",
-    body: "Every field stack collapses cleanly on mobile, with no side-scroll dependency."
-  },
-  {
-    title: "Fast access",
-    body: "The admin route lands you in the CMS or the inventory scan with one tap."
-  },
-  {
-    title: "Drag to reorder",
-    body: "Featured content and media cards can be shuffled visually before a save."
-  }
-];
+const formSchema = z.object({
+  sku: z.string().min(1), title: z.string().min(1), slug: z.string().min(1),
+  category: z.enum(["REPTILE", "LANDSCAPING", "TAXIDERMY", "SCULPTURAL_RELICS", "NANO_RANDOM"]),
+  description: z.string().min(1), story: z.string().optional(), length: z.string().optional(), width: z.string().optional(), height: z.string().optional(), weight: z.string().optional(), size: z.string().optional(), woodType: z.string().optional(), treatmentDetails: z.string().optional(), price: z.number().min(0), inventoryStatus: z.enum(["draft", "ready_for_review", "published", "reserved", "sold", "archived"]), isFeaturedGlobal: z.boolean(), isFeaturedCategory: z.boolean(), featuredCategoryTarget: z.string().optional()
+});
 
-const featureBoardSeed = [
-  { id: "hero", label: "Homepage hero", detail: "Top-of-funnel feature slot", accent: "cyan" },
-  { id: "drop", label: "New drop", detail: "Latest arrivals and one-off pieces", accent: "lime" },
-  { id: "vault", label: "Vault spotlight", detail: "Gallery-style collector focus", accent: "pink" },
-  { id: "reptile", label: "Reptile feature", detail: "Enclosure-first merchandising", accent: "yellow" }
-];
+type FormValues = z.infer<typeof formSchema>;
+const blankValues: FormValues = { sku: "", title: "", slug: "", category: "REPTILE", description: "", story: "", length: "", width: "", height: "", weight: "", size: "", woodType: "", treatmentDetails: "", price: 0, inventoryStatus: "draft", isFeaturedGlobal: false, isFeaturedCategory: false, featuredCategoryTarget: "" };
+const categoryLabels: Record<string, string> = { REPTILE: "Reptile", LANDSCAPING: "Landscaping", TAXIDERMY: "Taxidermy", SCULPTURAL_RELICS: "Sculptural Relics", NANO_RANDOM: "Nano Random" };
+const statusLabels: Record<string, string> = { draft: "Draft", ready_for_review: "Ready for review", published: "Published", reserved: "Reserved", sold: "Sold", archived: "Archived" };
 
-function moveItem<T>(items: T[], from: number, to: number) {
-  const copy = [...items];
-  const [item] = copy.splice(from, 1);
-  copy.splice(to, 0, item);
-  return copy;
+function readPreview(file: File) { return new Promise<string>((resolve) => { const reader = new FileReader(); reader.onload = () => resolve(String(reader.result)); reader.readAsDataURL(file); }); }
+
+function MediaSlot({ index, file, preview, onSelect, onRemove, onDragStart, onDragOver, onDrop }: { index: number; file: File | null; preview: string | null; onSelect: (event: ChangeEvent<HTMLInputElement>) => void; onRemove: () => void; onDragStart: () => void; onDragOver: (event: DragEvent<HTMLLabelElement>) => void; onDrop: (event: DragEvent<HTMLLabelElement>) => void }) {
+  return <label className={`deadwood-media-slot${file ? " has-file" : ""}`} draggable onDragStart={onDragStart} onDragOver={onDragOver} onDrop={onDrop}>
+    <input className="visually-hidden" type="file" accept="image/*" multiple={index === 0} onChange={onSelect} />
+    {preview ? <img src={preview} alt="" /> : <span className="deadwood-media-icon" aria-hidden="true">▧</span>}
+    {index === 0 ? <span className="deadwood-media-main">MAIN</span> : null}
+    {file ? <button className="deadwood-media-remove" type="button" aria-label="Remove image" onClick={(event) => { event.preventDefault(); onRemove(); }}>×</button> : null}
+  </label>;
 }
 
-export function AdminWorkbench() {
-  const featuredItem = inventoryItems[0];
-  const [featureBoard, setFeatureBoard] = useState(featureBoardSeed);
+export function AdminWorkbench({ products }: { products: AdminProduct[] }) {
+  const [selected, setSelected] = useState<AdminProduct | null>(null);
+  const [message, setMessage] = useState<string | null>(null);
+  const [toast, setToast] = useState<string | null>(null);
+  const [showPreview, setShowPreview] = useState(false);
+  const [pending, startTransition] = useTransition();
+  const [imageFiles, setImageFiles] = useState<Array<File | null>>([null, null, null, null, null]);
+  const [imagePreviews, setImagePreviews] = useState<Array<string | null>>([null, null, null, null, null]);
+  const [videoFile, setVideoFile] = useState<File | null>(null);
   const [dragIndex, setDragIndex] = useState<number | null>(null);
+  const form = useForm<FormValues>({ resolver: zodResolver(formSchema), defaultValues: blankValues });
+  const category = form.watch("category");
 
-  return (
-    <section className="admin-workbench">
-      <div className="cms-banner cms-panel">
-        <div>
-          <p className="eyebrow">Admin / CMS</p>
-          <h1 className="section-heading">Content system with a phone-first workflow.</h1>
-          <p className="section-copy">
-            Sign in, land in the hub, then jump into inventory, media, and featured collection
-            management without leaving the front end.
-          </p>
-        </div>
+  function resetComposer() { setSelected(null); setImageFiles([null, null, null, null, null]); setImagePreviews([null, null, null, null, null]); setVideoFile(null); setMessage(null); setToast(null); setShowPreview(false); form.reset(blankValues); }
+  function editProduct(product: AdminProduct) { setSelected(product); setImageFiles([null, null, null, null, null]); setImagePreviews([null, null, null, null, null]); setVideoFile(null); form.reset({ ...blankValues, sku: product.sku, title: product.title, slug: product.slug, category: (product.category === "SCULPTURAL RELICS" ? "SCULPTURAL_RELICS" : product.category) as FormValues["category"], story: product.story, description: product.description, price: product.priceCents / 100, inventoryStatus: product.status as FormValues["inventoryStatus"] }); }
+  async function chooseImages(_index: number, event: ChangeEvent<HTMLInputElement> | null, droppedFiles?: FileList) { const files = Array.from(droppedFiles ?? event?.target.files ?? []).filter((file) => file.type.startsWith("image/")); if (!files.length) return; const available = imageFiles.filter((file) => !file).length; const accepted = files.slice(0, available); const previews = await Promise.all(accepted.map(readPreview)); setImageFiles((current) => { const next = [...current]; accepted.forEach((file) => { const empty = next.findIndex((item) => !item); if (empty >= 0) next[empty] = file; }); return next; }); setImagePreviews((current) => { const next = [...current]; previews.forEach((preview) => { const empty = next.findIndex((item) => !item); if (empty >= 0) next[empty] = preview; }); return next; }); if (files.length > available) { setToast(`Only ${available} spots left, added ${accepted.length} of ${files.length}`); window.setTimeout(() => setToast(null), 2000); } if (event) event.target.value = ""; }
+  function removeImage(index: number) { setImageFiles((current) => current.map((file, i) => i === index ? null : file)); setImagePreviews((current) => current.map((preview, i) => i === index ? null : preview)); }
+  function moveImage(from: number, to: number) { setImageFiles((current) => { const next = [...current]; const [moved] = next.splice(from, 1); next.splice(to, 0, moved); return next; }); setImagePreviews((current) => { const next = [...current]; const [moved] = next.splice(from, 1); next.splice(to, 0, moved); return next; }); }
+  function submit(values: FormValues) { setMessage(null); const data = new FormData(); if (selected && selected.id.length === 36) data.set("id", selected.id); Object.entries(values).forEach(([key, value]) => { if (typeof value === "boolean") { if (value) data.set(key, "on"); } else data.set(key, String(value ?? "")); }); imageFiles.forEach((file) => { if (file) data.append("images", file); }); if (videoFile) data.set("video", videoFile); startTransition(async () => { const result = await saveProduct(data); if (result.success) { setToast(values.inventoryStatus === "published" ? "Published" : "Draft saved"); window.setTimeout(() => window.location.reload(), 2000); } else setMessage(result.error || "Could not save listing."); }); }
 
-        <div className="cms-banner-actions">
-          <Link className="cms-button primary" href="/admin/cms">
-            Open CMS
-          </Link>
-          <Link className="cms-button" href="/admin/settings">
-            Settings
-          </Link>
-        </div>
-      </div>
-
-      <div className="admin-metrics">
-        <article className="metric-card cms-panel">
-          <span>Inventory items</span>
-          <strong>{inventoryItems.length}</strong>
-        </article>
-        <article className="metric-card cms-panel">
-          <span>Size classes</span>
-          <strong>{sizeClasses.length}</strong>
-        </article>
-        <article className="metric-card cms-panel">
-          <span>Composer sections</span>
-          <strong>{cmsSections.length}</strong>
-        </article>
-      </div>
-
-      <div className="admin-workbench-grid">
-        <aside className="cms-rail cms-panel">
-          <div className="cms-rail-card">
-            <p className="eyebrow">Session</p>
-            <h2>Admin preview mode</h2>
-            <p>
-              This is the front-end shell for the future authenticated CMS session.
-            </p>
-          </div>
-
-          <nav className="cms-rail-nav" aria-label="Admin workbench navigation">
-            <a href="#inventory-composer">Inventory</a>
-            <a href="#feature-board">Feature board</a>
-            <a href="#media">Media</a>
-            <a href="#publishing">Publishing</a>
-          </nav>
-
-          <div className="cms-rail-card cms-rail-card-muted">
-            <p className="eyebrow">Workflow</p>
-            <p>
-              Start with inventory, then drag featured blocks, then finish media and publish.
-            </p>
-          </div>
-        </aside>
-
-        <div className="admin-main">
-          <section className="cms-summary cms-panel">
-            <div>
-              <p className="eyebrow">Current Draft</p>
-              <h2>{featuredItem.title}</h2>
-              <p>{featuredItem.description}</p>
-            </div>
-            <div className="cms-summary-meta">
-              <span>{featuredItem.sizeClass}</span>
-              <span>{featuredItem.availability}</span>
-              <span>{featuredItem.sector}</span>
-            </div>
-          </section>
-
-          <section className="admin-highlights">
-            {composerHighlights.map((item) => (
-              <article key={item.title} className="admin-highlight cms-panel">
-                <h3>{item.title}</h3>
-                <p>{item.body}</p>
-              </article>
-            ))}
-          </section>
-
-          <section id="feature-board" className="feature-board cms-panel">
-            <div className="section-bar">
-              <div>
-                <p className="eyebrow">Feature Collection</p>
-                <h2 className="product-title">Drag cards to reorder the surface.</h2>
-              </div>
-              <span className="section-note">Mobile draggable board</span>
-            </div>
-
-            <div className="feature-board-grid">
-              {featureBoard.map((card, index) => (
-                <button
-                  key={card.id}
-                  className={`feature-card accent-${card.accent}`}
-                  type="button"
-                  draggable
-                  onDragStart={() => setDragIndex(index)}
-                  onDragOver={(event) => event.preventDefault()}
-                  onDrop={() => {
-                    if (dragIndex === null || dragIndex === index) {
-                      return;
-                    }
-
-                    setFeatureBoard(moveItem(featureBoard, dragIndex, index));
-                    setDragIndex(null);
-                  }}
-                  onDragEnd={() => setDragIndex(null)}
-                >
-                  <span className="feature-card-kicker">Drag</span>
-                  <strong>{card.label}</strong>
-                  <p>{card.detail}</p>
-                </button>
-              ))}
-            </div>
-          </section>
-
-          <section id="inventory-composer" className="composer-shell cms-panel">
-            <div className="composer-head">
-              <div>
-                <p className="eyebrow">Inventory Composer</p>
-                <h2 className="section-heading">Build for the feed, the listing, and the phone.</h2>
-              </div>
-              <div className="composer-actions">
-                <button className="cms-button" type="button">
-                  Save Draft
-                </button>
-                <button className="cms-button primary" type="button">
-                  Publish
-                </button>
-              </div>
-            </div>
-
-            <div className="composer-body">
-              <div className="composer-form">
-                {cmsSections.map((section) => (
-                  <details key={section.id} className="composer-section" open={section.id === "basics"}>
-                    <summary>
-                      <span>{section.eyebrow}</span>
-                      <strong>{section.title}</strong>
-                      <p>{section.description}</p>
-                    </summary>
-
-                    <div className="field-grid">
-                      {cmsDraftFields[section.id].map((field) => (
-                        <label key={field.label} className="field-card">
-                          <span>{field.label}</span>
-                          {field.label === "Story tone" || field.label === "Internal note" ? (
-                            <textarea defaultValue={field.value} rows={3} />
-                          ) : (
-                            <input defaultValue={field.value} />
-                          )}
-                          {field.helper ? <small>{field.helper}</small> : null}
-                        </label>
-                      ))}
-                    </div>
-
-                    {section.id === "categories" ? (
-                      <div className="chip-group" aria-label="Category options">
-                        {cmsCategoryOptions.map((option) => (
-                          <button key={option} className="chip" type="button">
-                            {option}
-                          </button>
-                        ))}
-                      </div>
-                    ) : null}
-
-                    {section.id === "pricing" ? (
-                      <div className="chip-group" aria-label="Status options">
-                        {inventoryStatusOptions.map((option) => (
-                          <button key={option.value} className="chip" type="button">
-                            {option.label}
-                          </button>
-                        ))}
-                      </div>
-                    ) : null}
-
-                    {section.id === "measurements" ? (
-                      <div className="chip-group" aria-label="Size options">
-                        {cmsSizeOptions.map((option) => (
-                          <button key={option} className="chip" type="button">
-                            {option}
-                          </button>
-                        ))}
-                      </div>
-                    ) : null}
-                  </details>
-                ))}
-              </div>
-
-              <aside className="composer-sidebar">
-                <article className="composer-card">
-                  <p className="eyebrow">Publish Preview</p>
-                  <h3>{featuredItem.title}</h3>
-                  <p>{featuredItem.bestFor}</p>
-                  <div className="composer-preview-list">
-                    <span>{featuredItem.price.toLocaleString()}</span>
-                    <span>{featuredItem.dimensions}</span>
-                    <span>{featuredItem.weight}</span>
-                    <span>{featuredItem.bioSanctity}</span>
-                  </div>
-                </article>
-
-                <article className="composer-card" id="media">
-                  <p className="eyebrow">Media Stack</p>
-                  <ul>
-                    <li>Add photos, video, and alt text from the same panel.</li>
-                    <li>Drag the order before you publish.</li>
-                    <li>Feature collection slots can be pinned from here.</li>
-                  </ul>
-                </article>
-
-                <article className="composer-card" id="publishing">
-                  <p className="eyebrow">Publishing Controls</p>
-                  <ul>
-                    <li>Draft, review, scheduled, published, archived</li>
-                    <li>Private preview for internal eyes only</li>
-                    <li>Designed to work comfortably on a phone</li>
-                  </ul>
-                </article>
-              </aside>
-            </div>
-          </section>
-        </div>
-      </div>
-    </section>
-  );
+  return <section className="admin-workbench">
+    <header className="deadwood-cms-header"><div><p className="eyebrow">Deadwood CMS</p><h1 className="deadwood-cms-title">Deadwood Listings</h1><p className="section-copy">A private archive for one-of-one river forms.</p></div><div className="deadwood-cms-actions"><Link className="cms-button" href="/shop">View Store</Link><button className="cms-button primary" type="button" onClick={resetComposer}>New Listing</button></div></header>
+    {products.length === 0 ? <div className="deadwood-empty-state"><h2>No listings yet</h2><p>Create your first one-of-a-kind piece</p><button className="cms-button primary" type="button" onClick={resetComposer}>New Listing</button></div> : <section className="deadwood-inventory" aria-labelledby="inventory-heading"><div className="deadwood-section-header"><div><p className="eyebrow">The archive</p><h2 id="inventory-heading">Your listings</h2></div><span className="deadwood-count">{products.length} {products.length === 1 ? "listing" : "listings"}</span></div><div className="deadwood-inventory-grid">{products.map((product) => <article className="deadwood-inventory-card" key={product.id}><div className="deadwood-inventory-image">{product.heroImageUrl ? <img src={product.heroImageUrl} alt="" /> : <span className="deadwood-media-icon" aria-hidden="true">▧</span>}</div><div className="deadwood-inventory-card-body"><div><h3>{product.title}</h3><p>{categoryLabels[product.category] ?? product.category}</p></div><span className={`deadwood-status-pill status-${product.status}`}>{statusLabels[product.status] ?? product.status}</span><strong>${(product.priceCents / 100).toFixed(2)}</strong><button type="button" onClick={() => editProduct(product)}>Edit listing</button></div></article>)}</div></section>}
+    <form className="deadwood-form-shell" onSubmit={form.handleSubmit(submit)}>
+      <div className="deadwood-form-intro"><p className="eyebrow">{selected ? "Edit Listing" : "New Listing"}</p><h2>Listing Details</h2><span className={`deadwood-status-pill status-${form.watch("inventoryStatus")}`}>{statusLabels[form.watch("inventoryStatus")]}</span></div>
+      {message ? <p className="form-error" role="alert">{message}</p> : null}
+      <section className="deadwood-form-section"><h3>Basics</h3><div className="deadwood-form-grid"><label className="deadwood-field deadwood-field-wide"><span>Title</span><input {...form.register("title")} onChange={(event) => { form.setValue("title", event.target.value); if (!selected) form.setValue("slug", event.target.value.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)/g, "")); }} placeholder="A name for this piece" /></label><label className="deadwood-field"><span>SKU</span><input {...form.register("sku")} placeholder="DW-001" /></label><label className="deadwood-field"><span>Slug</span><input {...form.register("slug")} placeholder="piece-name" /></label><label className="deadwood-field"><span>Category</span><select {...form.register("category")}><option value="REPTILE">Reptile</option><option value="LANDSCAPING">Landscaping</option><option value="TAXIDERMY">Taxidermy</option><option value="SCULPTURAL_RELICS">Sculptural Relics / Art</option><option value="NANO_RANDOM">Nano Random</option></select></label>{category === "REPTILE" ? <label className="deadwood-field"><span>Size</span><select {...form.register("size")}><option value="">Select size</option><option value="NANO_6_12">Nano 6–12</option><option value="NANO_12_18">Nano 12–18</option><option value="SMALL_18_24">Small 18–24</option><option value="MEDIUM_24_36">Medium 24–36</option><option value="LARGE_36_48">Large 36–48</option><option value="XL_48_60">XL 48–60</option><option value="XXL_60_PLUS">XXL 60+</option><option value="TREE_60_80_WALL">Tree 60–80 / Wall</option></select></label> : null}<label className="deadwood-field"><span>Price</span><span className="deadwood-price-wrap"><b>$</b><input type="number" min="0" step="0.01" {...form.register("price", { valueAsNumber: true })} /></span><small className="deadwood-field-helper">USD</small></label></div></section>
+      <section className="deadwood-form-section"><h3>Dimensions</h3><div className="deadwood-dimensions-grid">{([["length", "Length", "in"], ["width", "Width", "in"], ["height", "Height", "in"], ["weight", "Weight", "lb"]] as const).map(([name, label, suffix]) => <label className="deadwood-field" key={name}><span>{label}</span><span className="deadwood-input-with-suffix"><input {...form.register(name)} /><b>{suffix}</b></span></label>)}</div></section>
+      <section className="deadwood-form-section"><h3>Wood &amp; Treatment</h3><div className="deadwood-form-grid"><label className="deadwood-field"><span>Wood type</span><input {...form.register("woodType")} placeholder="Oak, cottonwood, silver maple..." /></label><label className="deadwood-field deadwood-field-wide"><span>Treatment details</span><textarea rows={3} {...form.register("treatmentDetails")} placeholder="Bio-Sanctity, cleaning, origin notes..." /></label></div></section>
+      <section className="deadwood-form-section"><h3>Story</h3><div className="deadwood-form-grid"><label className="deadwood-field deadwood-field-wide"><span>Description</span><textarea rows={2} {...form.register("description")} placeholder="One-sentence essence" /></label><label className="deadwood-field deadwood-field-wide"><span>Story</span><textarea rows={5} {...form.register("story")} placeholder="The provenance, field note, or river memory behind this piece." />{category === "NANO_RANDOM" ? <small className="deadwood-conditional-note">Buyers receive a random 12&quot; piece from this collection</small> : null}</label></div></section>
+      <section className="deadwood-form-section"><div className="deadwood-section-header"><div><p className="eyebrow">Gallery</p><h3>Media</h3></div></div><div className="deadwood-media-grid">{imageFiles.map((file, index) => <MediaSlot key={index} index={index} file={file} preview={imagePreviews[index]} onSelect={(event) => chooseImages(index, event)} onRemove={() => removeImage(index)} onDragStart={() => setDragIndex(index)} onDragOver={(event) => { event.preventDefault(); event.dataTransfer.dropEffect = event.dataTransfer.files.length ? "copy" : "move"; }} onDrop={(event) => { event.preventDefault(); if (event.dataTransfer.files.length) { void chooseImages(index, null, event.dataTransfer.files); } else if (dragIndex !== null && dragIndex !== index) moveImage(dragIndex, index); setDragIndex(null); }} />)}</div><div className="deadwood-video-wrap"><p>Moving Study (Optional)</p><label className={`deadwood-media-slot deadwood-video-slot${videoFile ? " has-file" : ""}`}><input className="visually-hidden" type="file" accept="video/*" onChange={(event) => setVideoFile(event.target.files?.[0] || null)} />{videoFile ? <span className="deadwood-video-name">{videoFile.name}</span> : <span className="deadwood-media-icon" aria-hidden="true">▶</span>}{videoFile ? <button className="deadwood-media-remove" type="button" aria-label="Remove video" onClick={(event) => { event.preventDefault(); event.stopPropagation(); setVideoFile(null); }}>×</button> : null}</label></div></section>
+      <section className="deadwood-form-section"><h3>Publishing</h3><div className="deadwood-publishing-grid"><label className="deadwood-field"><span>Status</span><select {...form.register("inventoryStatus")}><option value="draft">Draft</option><option value="ready_for_review">Ready for review</option><option value="published">Published</option><option value="reserved">Reserved</option><option value="sold">Sold</option><option value="archived">Archived</option></select></label><div className="deadwood-featured"><span className="deadwood-featured-title">Featured</span><label className="deadwood-toggle"><input type="checkbox" {...form.register("isFeaturedGlobal")} /> <span>Feature on homepage</span></label><label className="deadwood-toggle"><input type="checkbox" {...form.register("isFeaturedCategory")} /> <span>Feature in category</span></label><label className="deadwood-field"><span>Category target</span><select {...form.register("featuredCategoryTarget")}><option value="">None</option>{Object.entries(categoryLabels).filter(([key]) => key !== "NANO_RANDOM").map(([key, label]) => <option key={key} value={key}>{label}</option>)}</select></label></div></div></section>
+      <div className="deadwood-save-bar"><button className="cms-button" type="button" onClick={() => setShowPreview(true)}>◉&nbsp; Preview</button><button className="cms-button primary" type="submit" disabled={pending}>{pending ? "Saving…" : "Save Listing"}</button></div>
+    </form>
+    {toast ? <div className="deadwood-toast" role="status">{toast}</div> : null}
+    {showPreview ? <div className="deadwood-preview-backdrop" role="dialog" aria-modal="true" aria-label="Listing preview"><div className="deadwood-preview-card"><button className="deadwood-preview-close" type="button" onClick={() => setShowPreview(false)}>×</button>{imagePreviews[0] ? <img src={imagePreviews[0]} alt="" /> : <div className="deadwood-preview-placeholder">▧</div>}<p className="eyebrow">{categoryLabels[category]}</p><h2>{form.watch("title") || "Untitled listing"}</h2><p>{form.watch("description") || "One-sentence essence"}</p><strong>${(Number(form.watch("price") || 0)).toFixed(2)}</strong></div></div> : null}
+    {selected && selected.id.length === 36 ? <button className="danger-button" type="button" onClick={() => startTransition(async () => { const result = await deleteProduct(selected.id); setMessage(result.error || "Listing deleted."); if (result.success) window.location.reload(); })}>Delete listing</button> : null}
+  </section>;
 }
