@@ -1,11 +1,10 @@
 .page { min-height: 100vh; padding: 0 0 5rem; overflow: hidden; background: #050505; }
 .heroWrap { width: 100%; max-width: none; margin: 0; padding: 16px 8px 0; }
-.hero { position: relative; width: 100%; height: clamp(540px,78vh,860px); overflow: hidden; border-radius: 24px; background: #000; }
-.heroImg { display: block; width: 100%; height: 100%; object-fit: cover; object-position: center 35%; }
-.hero::before, .hero::after { position: absolute; z-index: 2; top: 0; bottom: 0; width: 22%; content: ""; pointer-events: none; }
-.hero::before { left: 0; background: linear-gradient(to right,rgba(0,0,0,.88),transparent); }
-.hero::after { right: 0; background: linear-gradient(to left,rgba(0,0,0,.88),transparent); }
-.heroBottom { position: absolute; z-index: 2; right: 0; bottom: 0; left: 0; height: 32%; background: linear-gradient(to top,rgba(0,0,0,.92),transparent); pointer-events: none; }
+.hero { position: relative; width: 100%; height: clamp(440px,62vh,680px); overflow: hidden; border-radius: 24px; background: #000; }
+.heroImg { object-fit: contain; object-position: center bottom; }
+.heroCopy { position: absolute; z-index: 2; right: clamp(1.5rem,5vw,5rem); bottom: clamp(1.5rem,5vw,4.5rem); width: min(42rem,calc(100% - 3rem)); text-align: right; }
+.heroCopy h1 { margin: .55rem 0 0; color: #f5f1e9; font-size: clamp(2.7rem,6vw,6rem); font-weight: 300; letter-spacing: -.055em; line-height: .92; }
+.heroCopy > p:last-child { max-width: 35rem; margin: 1rem 0 0 auto; color: #d0cbc2; font-size: clamp(.9rem,1.3vw,1.08rem); line-height: 1.55; }
 .howToShop { margin: 0; padding: clamp(3rem,7vw,7rem) clamp(1.25rem,4vw,4rem); }
 .howIntro { display: grid; grid-template-columns: minmax(0,1fr) minmax(18rem,.75fr); gap: 2rem; align-items: end; }
 .howIntro h1 { max-width: 42rem; margin: .65rem 0 0; color: #f5f1e9; font-size: clamp(2.5rem,5vw,5.3rem); font-weight: 350; letter-spacing: -.055em; line-height: .98; }
@@ -27,6 +26,11 @@
 .inventory { padding: clamp(3rem,7vw,7rem) 8px 0; scroll-margin-top: 90px; }
 .inventoryGrid { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 1rem; }
 @media (max-width: 767px) {
+  .hero { height: clamp(310px,88vw,350px); }
+  .heroImg { object-position: center bottom; }
+  .heroCopy { right: 1rem; bottom: 1rem; left: 1rem; width: auto; }
+  .heroCopy h1 { margin-top: .35rem; font-size: clamp(2.1rem,10vw,2.8rem); }
+  .heroCopy > p:last-child { max-width: 24rem; margin-top: .65rem; font-size: .78rem; line-height: 1.4; }
   .howIntro, .partnerSection { grid-template-columns: 1fr; }
   .howSteps, .inventoryGrid { grid-template-columns: 1fr; }
   .howSteps div, .howSteps div:first-child { min-height: auto; padding: 1.25rem 0 1.25rem 1rem; border-top: 1px solid rgba(255,255,255,.1); border-left: 1px solid rgba(217,163,104,.45); }

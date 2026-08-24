@@ -19,8 +19,12 @@ export default async function ReptileShopPage() {
     <main className={styles.page}>
       <div className={styles.heroWrap}>
         <section className={styles.hero} aria-label="River-worn driftwood hero">
-          <Image src="/assets/reptile/deadwoodReptileHero.png" alt="River-worn driftwood arranged for reptile and bioactive habitats" width={2880} height={1620} priority sizes="100vw" className={styles.heroImg} />
-          <div className={styles.heroBottom} />
+          <Image src="/assets/reptile/hero-gecko-driftwood.png" alt="Crested gecko resting on sculptural river-worn driftwood" fill priority sizes="100vw" className={styles.heroImg} />
+          <div className={styles.heroCopy}>
+            <p className="eyebrow">{sectorConfig.reptile.hero.eyebrow}</p>
+            <h1>{sectorConfig.reptile.hero.title}</h1>
+            <p>{sector.description}</p>
+          </div>
         </section>
       </div>
 
