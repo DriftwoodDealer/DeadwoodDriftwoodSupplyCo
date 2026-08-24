@@ -1,196 +1,29 @@
-.page {
-  min-height: 100vh;
-  padding: 0 0 5rem;
-  background: #050505;
-}
-
-.hero {
-  position: relative;
-  width: 100%;
-  overflow: hidden;
-  background: #000;
-}
-
-.heroImage {
-  width: 100%;
-  height: auto;
-}
-
-.heroCopy {
-  position: absolute;
-  top: clamp(1.25rem, 4vw, 3rem);
-  left: clamp(1rem, 4vw, 3rem);
-  max-width: min(30rem, calc(100% - 2rem));
-}
-
-.heroTag {
-  margin: 0 0 0.7rem;
-  color: #b47a45;
-  font-size: 0.72rem;
-  letter-spacing: 0.28em;
-  text-transform: uppercase;
-}
-
-.heroHeading {
-  margin: 0;
-  color: #fff;
-  font-size: clamp(2rem, 5vw, 4.8rem);
-  font-weight: 250;
-  letter-spacing: 0.03em;
-  line-height: 1;
-}
-
-.divider {
-  display: grid;
-  height: clamp(130px, 15vw, 180px);
-  margin-top: 3rem;
-  place-items: center;
-  overflow: hidden;
-  background: #000;
-}
-
-.dividerVideo {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-
-.tierSection {
-  margin-top: 2.5rem;
-}
-
-.tierGrid {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 20px;
-  padding: 0 40px;
-}
-
-.tierCard,
-.wholesaleCard {
-  position: relative;
-  min-width: 0;
-  overflow: hidden;
-  aspect-ratio: 2880 / 810;
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  background: #080808;
-  transition: transform 300ms ease-out, box-shadow 300ms ease;
-}
-
-@media (hover: hover) and (min-width: 761px) {
-  .tierCard:hover,
-  .wholesaleCard:hover {
-    transform: scale(1.015);
-    box-shadow: 0 0 15px rgba(245, 158, 11, 0.25);
-  }
-}
-
-.tierImage {
-  object-fit: cover;
-}
-
-.tierLink {
-  position: absolute;
-  inset: 0;
-  z-index: 1;
-  outline-offset: -3px;
-}
-
-.tierLink:focus-visible {
-  outline: 2px solid #f59e0b;
-}
-
-.wholesaleCard {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  gap: 1.25rem;
-  padding: clamp(1.25rem, 4vw, 3rem);
-  background:
-    linear-gradient(135deg, rgba(180, 122, 69, 0.14), rgba(255, 255, 255, 0.025)),
-    #080808;
-}
-
-.wholesaleCard h2 {
-  max-width: 24rem;
-  margin: 0;
-  color: #fff;
-  font-size: clamp(1.35rem, 3vw, 2.5rem);
-  font-weight: 350;
-  line-height: 1.05;
-}
-
-.wholesaleCard p {
-  max-width: 27rem;
-  margin: 0.8rem 0 0;
-  color: #928b80;
-  line-height: 1.6;
-}
-
-.wholesaleButton {
-  align-self: flex-start;
-  padding: 0.7rem 0.9rem;
-  border: 1px solid rgba(180, 122, 69, 0.52);
-  color: #fff;
-  font-size: 0.68rem;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-}
-
-.wholesaleButton:hover {
-  background: rgba(180, 122, 69, 0.16);
-}
-
-.inventory {
-  margin-top: 4rem;
-  padding: 0 40px;
-}
-
-.inventoryGrid {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 1rem;
-}
-
-.srOnly {
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  padding: 0;
-  margin: -1px;
-  overflow: hidden;
-  clip: rect(0, 0, 0, 0);
-  white-space: nowrap;
-  border: 0;
-}
-
-@media (max-width: 760px) {
-  .heroCopy {
-    top: 1rem;
-    left: 1rem;
-  }
-
-  .heroHeading {
-    font-size: clamp(1.65rem, 8vw, 2.6rem);
-  }
-
-  .divider { height: 140px; }
-
-  .tierGrid,
-  .inventoryGrid {
-    grid-template-columns: 1fr;
-  }
-
-  .tierGrid,
-  .inventory {
-    padding-right: 16px;
-    padding-left: 16px;
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .tierCard,
-  .wholesaleCard {
-    transition: none;
-  }
+.page { min-height: 100vh; padding: 0 0 5rem; overflow: hidden; background: #050505; }
+.hero { position: relative; width: calc(100% - 16px); height: calc(100svh - 80px); min-height: 32rem; max-height: 56rem; margin: 8px; overflow: hidden; background: #000; }
+.heroImage { width: 100%; height: 100%; object-fit: cover; object-position: center center; }
+.howToShop { margin: 0; padding: clamp(3rem,7vw,7rem) clamp(1.25rem,4vw,4rem); }
+.howIntro { display: grid; grid-template-columns: minmax(0,1fr) minmax(18rem,.75fr); gap: 2rem; align-items: end; }
+.howIntro h1 { max-width: 42rem; margin: .65rem 0 0; color: #f5f1e9; font-size: clamp(2.5rem,5vw,5.3rem); font-weight: 350; letter-spacing: -.055em; line-height: .98; }
+.howIntro > p { max-width: 34rem; margin: 0; color: var(--muted); line-height: 1.7; }
+.howSteps { display: grid; grid-template-columns: repeat(3,1fr); margin-top: 2.5rem; }
+.howSteps div { min-height: 8rem; padding: 0 1.5rem; border-left: 1px solid rgba(255,255,255,.13); }
+.howSteps div:first-child { padding-left: 0; border-left: 0; }
+.howSteps span { display: block; margin-bottom: .8rem; color: #d9a368; font-family: ui-monospace,SFMono-Regular,Menlo,monospace; font-size: .65rem; letter-spacing: .14em; }
+.howSteps strong { color: #f5f1e9; }
+.howSteps p { max-width: 24rem; margin: .6rem 0 0; color: var(--muted); font-size: .9rem; line-height: 1.6; }
+.partnerSection { display: grid; grid-template-columns: 1.1fr .9fr; gap: 1px; width: calc(100% - 16px); margin: 8px; overflow: hidden; border: 1px solid rgba(217,163,104,.26); border-radius: 20px; background: rgba(217,163,104,.2); }
+.partnerSection > div { padding: clamp(1.5rem,3vw,3rem); background: linear-gradient(135deg,rgba(180,122,69,.12),rgba(255,255,255,.025)),#0c0b0a; }
+.partnerSection h2, .partnerSection h3 { max-width: 34rem; margin: .5rem 0 0; color: #fff; font-size: clamp(1.55rem,3vw,3.2rem); font-weight: 400; line-height: 1; }
+.partnerSection h3 { font-size: clamp(1.35rem,2.3vw,2.5rem); }
+.partnerSection p:not(:global(.eyebrow)) { max-width: 38rem; margin: 1rem 0 0; color: #bcb5aa; line-height: 1.6; }
+.partnerButton { display: inline-flex; margin-top: 1.4rem; padding: .75rem 1rem; border: 1px solid #d9a368; border-radius: 999px; color: #d9a368; font-size: .68rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; }
+.partnerButton:hover { background: #d9a368; color: #090807; }
+.inventory { padding: clamp(3rem,7vw,7rem) 8px 0; scroll-margin-top: 90px; }
+.inventoryGrid { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 1rem; }
+@media (max-width: 767px) {
+  .hero { height: auto; min-height: 0; aspect-ratio: 16 / 9; }
+  .heroImage { object-fit: contain; }
+  .howIntro, .partnerSection { grid-template-columns: 1fr; }
+  .howSteps, .inventoryGrid { grid-template-columns: 1fr; }
+  .howSteps div, .howSteps div:first-child { min-height: auto; padding: 1.25rem 0 1.25rem 1rem; border-top: 1px solid rgba(255,255,255,.1); border-left: 1px solid rgba(217,163,104,.45); }
 }
