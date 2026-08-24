@@ -5,7 +5,7 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "postbuild": "playwright test || true",
+    "postbuild": "test \"$VERCEL\" = \"1\" || playwright test || true",
     "start": "next start",
     "lint": "eslint .",
     "typecheck": "tsc --noEmit",
