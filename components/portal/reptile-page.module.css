@@ -1,6 +1,11 @@
 .page { min-height: 100vh; padding: 0 0 5rem; overflow: hidden; background: #050505; }
-.hero { position: relative; width: calc(100% - 16px); height: calc(100svh - 80px); min-height: 32rem; max-height: 56rem; margin: 8px; overflow: hidden; background: #000; }
-.heroImage { width: 100%; height: 100%; object-fit: cover; object-position: center center; }
+.heroWrap { width: 100%; max-width: none; margin: 0; padding: 16px 8px 0; }
+.hero { position: relative; width: 100%; height: clamp(540px,78vh,860px); overflow: hidden; border-radius: 24px; background: #000; }
+.heroImg { display: block; width: 100%; height: 100%; object-fit: cover; object-position: center 35%; }
+.hero::before, .hero::after { position: absolute; z-index: 2; top: 0; bottom: 0; width: 22%; content: ""; pointer-events: none; }
+.hero::before { left: 0; background: linear-gradient(to right,rgba(0,0,0,.88),transparent); }
+.hero::after { right: 0; background: linear-gradient(to left,rgba(0,0,0,.88),transparent); }
+.heroBottom { position: absolute; z-index: 2; right: 0; bottom: 0; left: 0; height: 32%; background: linear-gradient(to top,rgba(0,0,0,.92),transparent); pointer-events: none; }
 .howToShop { margin: 0; padding: clamp(3rem,7vw,7rem) clamp(1.25rem,4vw,4rem); }
 .howIntro { display: grid; grid-template-columns: minmax(0,1fr) minmax(18rem,.75fr); gap: 2rem; align-items: end; }
 .howIntro h1 { max-width: 42rem; margin: .65rem 0 0; color: #f5f1e9; font-size: clamp(2.5rem,5vw,5.3rem); font-weight: 350; letter-spacing: -.055em; line-height: .98; }
@@ -18,11 +23,10 @@
 .partnerSection p:not(:global(.eyebrow)) { max-width: 38rem; margin: 1rem 0 0; color: #bcb5aa; line-height: 1.6; }
 .partnerButton { display: inline-flex; margin-top: 1.4rem; padding: .75rem 1rem; border: 1px solid #d9a368; border-radius: 999px; color: #d9a368; font-size: .68rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; }
 .partnerButton:hover { background: #d9a368; color: #090807; }
+.treatmentSection { margin-bottom: 8px; }
 .inventory { padding: clamp(3rem,7vw,7rem) 8px 0; scroll-margin-top: 90px; }
 .inventoryGrid { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 1rem; }
 @media (max-width: 767px) {
-  .hero { height: auto; min-height: 0; aspect-ratio: 16 / 9; }
-  .heroImage { object-fit: contain; }
   .howIntro, .partnerSection { grid-template-columns: 1fr; }
   .howSteps, .inventoryGrid { grid-template-columns: 1fr; }
   .howSteps div, .howSteps div:first-child { min-height: auto; padding: 1.25rem 0 1.25rem 1rem; border-top: 1px solid rgba(255,255,255,.1); border-left: 1px solid rgba(217,163,104,.45); }

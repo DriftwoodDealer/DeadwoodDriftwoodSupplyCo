@@ -19,8 +19,8 @@ export default function ReptileScaleGrid() {
       <h2 id="reptile-scale-heading" className={styles.srOnly}>Reptile driftwood size classes</h2>
       <div className={styles.grid}>
         {cards.map((card) => (
-          <article key={card.title} className={`${styles.card} ${card.wide ? `${styles.span2} ${styles.cardWide}` : ""}`}>
-            <Image src={card.img} alt={`${card.title} reptile driftwood enclosure`} fill sizes={card.wide ? "calc(100vw - 16px)" : "(max-width: 767px) calc(100vw - 16px), calc(50vw - 12px)"} className={styles.cardImage} />
+          <article key={card.title} className={card.wide ? styles.cardTree : styles.card}>
+            <Image src={card.img} alt={`${card.title} reptile driftwood enclosure`} fill sizes={card.wide ? "calc(100vw - 16px)" : "(max-width: 767px) calc(100vw - 16px), calc(50vw - 12px)"} className={card.wide ? styles.cardTreeImage : styles.cardImage} />
             <div className={styles.cardGradient} />
             <div className={styles.cardContent}>
               <h2 className={`${anton.className} ${styles.cardTitle}`}>{card.title}</h2>

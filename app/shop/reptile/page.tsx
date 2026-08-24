@@ -17,9 +17,12 @@ export default async function ReptileShopPage() {
 
   return (
     <main className={styles.page}>
-      <section className={styles.hero} aria-label="River-worn driftwood hero">
-        <Image src="/assets/reptile/deadwoodReptileHero.png" alt="River-worn driftwood arranged for reptile and bioactive habitats" width={2880} height={1620} priority sizes="100vw" className={styles.heroImage} />
-      </section>
+      <div className={styles.heroWrap}>
+        <section className={styles.hero} aria-label="River-worn driftwood hero">
+          <Image src="/assets/reptile/deadwoodReptileHero.png" alt="River-worn driftwood arranged for reptile and bioactive habitats" width={2880} height={1620} priority sizes="100vw" className={styles.heroImg} />
+          <div className={styles.heroBottom} />
+        </section>
+      </div>
 
       <section className={styles.howToShop} aria-labelledby="reptile-how-to-shop">
         <div className={styles.howIntro}>
@@ -32,7 +35,7 @@ export default async function ReptileShopPage() {
       </section>
 
       <ReptileScaleGrid />
-      <TreatmentProcess />
+      <div className={styles.treatmentSection}><TreatmentProcess /></div>
 
       <section className={styles.partnerSection} aria-labelledby="partner-heading">
         <div>
