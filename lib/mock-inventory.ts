@@ -36,46 +36,98 @@ export type InventoryItem = {
   videoUrl?: string;
 };
 
-export const sizeClasses: Array<{
+export type SizeGuideBehavior = "cart" | "browse" | "page";
+
+export type SizeClassEntry = {
   name: SizeClass;
+  slug: string;
   scale: string;
+  range: string;
+  image: string;
+  behavior: SizeGuideBehavior;
   bestFor: string;
   description: string;
-}> = [
+  rangeDescription?: string;
+  priceFrom?: number;
+};
+
+export const SIZE_CLASS_RANGES: Record<string, string> = {
+  Nano: "up to 12 inches",
+  Medium: "12 to 34 inches",
+  "Specimen XL": "24 to 36 inches",
+  "Centerpiece XXL": "36 to 60 inches",
+  "Tree XXXL": "60 to 80+ inches",
+};
+
+export const ALL_FORMS_TIER: SizeClassEntry = {
+  name: "Medium" as SizeClass,
+  slug: "all",
+  scale: "Complete Archive Range",
+  range: "12 to 60 inches",
+  image: "/assets/reptile/medium.webp",
+  behavior: "browse",
+  bestFor: "All medium, specimen, and centerpiece installations across living enclosures.",
+  description: "Browse the curated active catalog from Medium daily accents all the way to Centerpiece XXL showcase roots.",
+};
+
+export const sizeClasses: SizeClassEntry[] = [
   {
     name: "Nano",
+    slug: "nano",
     scale: "Small accents",
+    range: "up to 12 inches",
+    image: "/assets/reptile/nano.webp",
+    behavior: "cart",
+    priceFrom: 25,
     bestFor: "Nano tanks, juvenile enclosures, terrarium accents, and shelf displays.",
     description:
-      "Small river-worn forms selected for tight compositions where texture matters more than mass."
+      "Best for Micro enclosures. Ideal for compact 12x12x12 desktop terrariums, perfect for Mantids, Jumping Spiders and other small invertebrates.",
+    rangeDescription:
+      "Each Nano piece is hand-selected from the river archive. You won't choose a specific piece — we pick one within the Nano size range that's right for your build. Every piece is cleaned, inspected, and heat-treated before it ships."
   },
   {
     name: "Medium",
+    slug: "medium",
     scale: "Everyday centerpiece",
+    range: "12 to 34 inches",
+    image: "/assets/reptile/medium.webp",
+    behavior: "browse",
     bestFor: "Most bioactive builds, aquascapes, mantis habitats, and medium reptile enclosures.",
     description:
-      "Balanced pieces with enough shape to anchor a scene without swallowing the enclosure."
+      "Ideal for medium enclosures (12–34 inches), offering ample climbing and enrichment for arboreal reptiles and custom vivarium setups."
   },
   {
     name: "Specimen XL",
+    slug: "specimen-xl",
     scale: "Statement structure",
+    range: "24 to 36 inches",
+    image: "/assets/reptile/specimen-xl.webp",
+    behavior: "browse",
     bestFor: "Larger reptile spaces, taxidermy bases, display shelves, and planted hardscapes.",
     description:
-      "Distinct silhouettes with stronger branching, arches, cavities, or vertical movement."
+      "Specimen XL, a statement piece, ideal for large arboreal enclosures, breeder displays and premium custom vivariums."
   },
   {
     name: "Centerpiece XXL",
+    slug: "centerpiece-xxl",
     scale: "Room-defining",
+    range: "36 to 60 inches",
+    image: "/assets/reptile/centerpiece-xxl.webp",
+    behavior: "browse",
     bestFor: "Large enclosures, landscaping installs, lobby displays, and serious collection pieces.",
     description:
-      "Heavy, sculptural finds that need measured placement, stronger photography, and shipping review."
+      "Centerpiece XXL Tree — A true zoo-level statement piece, designed as the focal point for extra-large reptile exhibits and high-end custom vivariums."
   },
   {
     name: "Tree XXXL",
+    slug: "tree-xxxl",
     scale: "Architectural relic",
+    range: "60 to 80+ inches",
+    image: "/assets/reptile/reptile_house_panorama.jpg",
+    behavior: "page",
     bestFor: "Commercial spaces, large landscape installs, museum-style display, and commissioned staging.",
     description:
-      "Rare trunk-scale material treated more like natural architecture than ordinary inventory."
+      "Designed for zoo-level exhibits, this XXXL tree enclosure stands 60–80+ inches tall. Ideal for large reptile displays and custom vivarium builds."
   }
 ];
 
@@ -132,6 +184,11 @@ export const inventoryItems: InventoryItem[] = [
     dimensions: "34 in x 18 in x 14 in",
     weight: "12 lb",
     image: "/assets/images/deadwood-hero.png",
+    media: [
+      "/assets/images/deadwood-hero.png",
+      "/assets/images/wood_1.png",
+      "/assets/images/driftwood_1.png"
+    ],
     featured: true,
     vault: true,
     hasVideo: true,
@@ -149,14 +206,19 @@ export const inventoryItems: InventoryItem[] = [
     slug: "taxidermy-perch-branch",
     title: "Taxidermy Perch Branch",
     sector: "Taxidermy",
-    sectors: ["Taxidermy", "Wholesale"],
+    sectors: ["Taxidermy", "Reptile", "Wholesale"],
     sizeClass: "Specimen XL",
     price: 145,
     status: "published",
     availability: "Available",
     dimensions: "28 in x 9 in x 7 in",
     weight: "7 lb",
-    image: "/assets/images/deadwood-hero.png",
+    image: "/assets/images/wood_1.png",
+    media: [
+      "/assets/images/wood_1.png",
+      "/assets/images/driftwood_1.png",
+      "/assets/images/deadwood-hero.png"
+    ],
     featured: true,
     vault: false,
     hasVideo: false,
@@ -182,6 +244,10 @@ export const inventoryItems: InventoryItem[] = [
     dimensions: "58 in x 22 in x 20 in",
     weight: "86 lb",
     image: "/assets/images/deadwood-hero.png",
+    media: [
+      "/assets/images/deadwood-hero.png",
+      "/assets/images/DeadwoodTREEEz.png"
+    ],
     featured: true,
     vault: true,
     hasVideo: true,
@@ -206,7 +272,11 @@ export const inventoryItems: InventoryItem[] = [
     availability: "Available",
     dimensions: "9 in x 5 in x 4 in",
     weight: "1 lb",
-    image: "/assets/images/deadwood-hero.png",
+    image: "/assets/images/driftwood_1.png",
+    media: [
+      "/assets/images/driftwood_1.png",
+      "/assets/images/wood_1.png"
+    ],
     featured: false,
     vault: false,
     hasVideo: false,
@@ -221,25 +291,84 @@ export const inventoryItems: InventoryItem[] = [
     id: "dw-005",
     slug: "gallery-silver-root",
     title: "Gallery Silver Root",
-    sector: "Sculptural Relics",
-    sectors: ["Sculptural Relics", "Landscaping", "Private Gallery"],
+    sector: "Reptile",
+    sectors: ["Reptile", "Sculptural Relics", "Landscaping"],
     sizeClass: "Medium",
-    price: 310,
+    price: 135,
     status: "published",
-    availability: "Request quote",
+    availability: "Available",
     dimensions: "24 in x 14 in x 11 in",
-    weight: "10 lb",
-    image: "/assets/images/deadwood-hero.png",
+    weight: "8 lb",
+    image: "/assets/images/wood_1.png",
+    media: [
+      "/assets/images/wood_1.png",
+      "/assets/images/driftwood_1.png",
+      "/assets/images/deadwood-hero.png"
+    ],
     featured: false,
     vault: true,
     hasVideo: true,
     gpsAvailable: false,
     description:
-      "Silvered root structure with gallery-grade surface texture and a balanced profile for display or refined hardscape work.",
-    provenance: "Held back from standard inventory because the form reads more like sculpture than supply.",
+      "Silvered root structure with natural climb-throughs and a balanced profile for mid-size bioactive terrariums or vivarium hardscapes.",
+    provenance: "Held back from standard inventory because the form reads with distinct natural curves.",
     bioSanctity:
       "Power washed, inspected, and heat treated at 275 degrees for 4+ hours before photography.",
-    bestFor: "Fine art display, boutique interiors, planted hardscape, and collector shelving."
+    bestFor: "Medium arboreal reptile setups, bioactive vivariums, and display terrariums."
+  },
+  {
+    id: "dw-006",
+    slug: "river-bend-arboreal-arch",
+    title: "River Bend Arboreal Arch",
+    sector: "Reptile",
+    sectors: ["Reptile", "Aquariums"],
+    sizeClass: "Medium",
+    price: 165,
+    status: "published",
+    availability: "Available",
+    dimensions: "26 in x 12 in x 9 in",
+    weight: "6 lb",
+    image: "/assets/images/driftwood_1.png",
+    media: [
+      "/assets/images/driftwood_1.png",
+      "/assets/images/wood_1.png"
+    ],
+    featured: true,
+    vault: false,
+    hasVideo: false,
+    gpsAvailable: true,
+    description:
+      "Naturally hollowed Missouri River archway with deep grain fissures and excellent basking ridges for geckos and climbers.",
+    provenance: "Sourced from gravel deposits exposed during late autumn water drop.",
+    bioSanctity: "Power washed, sanitized, and oven-cured at 275°F.",
+    bestFor: "Arboreal reptile climbing, 18x18x24 and 24x18x36 vivariums."
+  },
+  {
+    id: "dw-007",
+    slug: "specimen-split-trunk-tower",
+    title: "Specimen Split Trunk Tower",
+    sector: "Reptile",
+    sectors: ["Reptile", "Taxidermy"],
+    sizeClass: "Specimen XL",
+    price: 240,
+    status: "published",
+    availability: "Available",
+    dimensions: "32 in x 16 in x 12 in",
+    weight: "14 lb",
+    image: "/assets/images/deadwood-hero.png",
+    media: [
+      "/assets/images/deadwood-hero.png",
+      "/assets/images/wood_1.png"
+    ],
+    featured: true,
+    vault: true,
+    hasVideo: true,
+    gpsAvailable: true,
+    description:
+      "Heavy, statement-grade hardwood relic with multiple diagonal perches and ancient river-worn curves.",
+    provenance: "Excavated from natural sandbank archive along the lower Missouri river basin.",
+    bioSanctity: "Oven baked at 275°F for 5 hours. Guaranteed pest and mold free.",
+    bestFor: "Large arboreal cages, 36+ inch enclosures, and centerpiece displays."
   }
 ];
 

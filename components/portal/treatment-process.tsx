@@ -9,20 +9,19 @@ const steps = [
 export function TreatmentProcess() {
   return (
     <section className={styles.section} aria-labelledby="treatment-heading">
-      <div className={styles.intro}>
-        <p className="eyebrow">The Treatment Room</p>
-        <h2 id="treatment-heading">Prepared for the life that gathers around it.</h2>
-        <p>Every habitat-bound piece is handled with a simple, considered process before it enters the catalog.</p>
+      <video className={styles.video} autoPlay muted loop playsInline preload="metadata" poster="/assets/videos/reptile-cleaning-poster.webp" aria-hidden="true">
+        <source src="/assets/videos/reptile-cleaning.mp4" type="video/mp4" />
+      </video>
+      <div className={styles.scrim} />
+      <div className={styles.content}>
+        <div className={styles.intro}>
+          <div><p className="eyebrow">The Treatment Room</p><h2 id="treatment-heading">Prepared for the life that gathers around it.</h2></div>
+          <p>Every habitat-bound piece is handled with a simple, considered process before it enters the catalog.</p>
+        </div>
+        <ol className={styles.steps}>
+          {steps.map((step) => <li key={step.number}><span>{step.number}</span><h3>{step.title}</h3><p>{step.detail}</p></li>)}
+        </ol>
       </div>
-      <ol className={styles.steps}>
-        {steps.map((step) => (
-          <li key={step.number}>
-            <span>{step.number}</span>
-            <h3>{step.title}</h3>
-            <p>{step.detail}</p>
-          </li>
-        ))}
-      </ol>
     </section>
   );
 }

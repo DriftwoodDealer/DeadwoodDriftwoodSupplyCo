@@ -1,21 +1,18 @@
-import { SectorPage } from "@/components/portal/sector-page";
-import { ReptileTierCards } from "@/components/portal/reptile-tier-cards";
-import { TreatmentProcess } from "@/components/portal/treatment-process";
+import { SectorStorefrontPage } from "@/components/sector/SectorStorefrontPage";
+import { reptileStorefrontConfig } from "@/lib/sector-storefront-config";
+import { getInventoryBySector } from "@/lib/inventory-data";
 import { getSectorBySlug } from "@/lib/mock-inventory";
 
-export default function ReptileShopPage() {
+export default async function ReptileShopPage() {
   const sector = getSectorBySlug("reptile");
   if (!sector) return null;
 
+  const items = await getInventoryBySector(sector);
+
   return (
-    <SectorPage sector={sector}>
-      <section className="store-section reptile-video-divider" aria-label="River-worn driftwood forms">
-        <video autoPlay muted loop playsInline preload="metadata" aria-label="River-worn driftwood forms">
-          <source src="/assets/dividers/deadwoodReptile.mp4" type="video/mp4" />
-        </video>
-      </section>
-      <ReptileTierCards />
-      <TreatmentProcess />
-    </SectorPage>
+    <SectorStorefrontPage
+      config={reptileStorefrontConfig}
+      items={items}
+    />
   );
 }
