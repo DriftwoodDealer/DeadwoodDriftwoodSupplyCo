@@ -59,40 +59,40 @@ export default function HomePage() {
             </p>
           </Link>
         </div>
+      </section>
 
-        <section className="home-feature-video" aria-label="Deadwood river archive film">
-          <video
-            className="home-feature-video-media"
-            autoPlay
-            muted
-            loop
-            playsInline
-            preload="metadata"
-            aria-label="Deadwood river archive film"
-          >
-            <source src="/assets/videos/vid.mp4" type="video/mp4" />
-          </video>
-        </section>
+      <section className="home-feature-video" aria-label="Deadwood river archive film">
+        <video
+          className="home-feature-video-media"
+          autoPlay
+          muted
+          loop
+          playsInline
+          preload="metadata"
+          aria-label="Deadwood river archive film"
+        >
+          <source src="/assets/videos/vid.mp4" type="video/mp4" />
+        </video>
+      </section>
 
-        <section className="store-section" aria-labelledby="home-river-archive">
-          <div className="section-bar">
-            <div>
-              <p className="eyebrow">From The River Archive</p>
-              <h2 id="home-river-archive" className="product-title">
-                A few pieces worth crossing the room for.
-              </h2>
-            </div>
-            <Link className="button" href="/shop">
-              Shop
-            </Link>
+      <section className="page-shell store-section" aria-labelledby="home-river-archive">
+        <div className="section-bar">
+          <div>
+            <p className="eyebrow">From The River Archive</p>
+            <h2 id="home-river-archive" className="product-title">
+              A few pieces worth crossing the room for.
+            </h2>
           </div>
+          <Link className="button" href="/shop">
+            Shop
+          </Link>
+        </div>
 
-          <div className="grid">
-            {featuredItems.map((item) => (
-              <ProductCard key={item.id} item={item} />
-            ))}
-          </div>
-        </section>
+        <div className="grid">
+          {featuredItems.map((item) => (
+            <ProductCard key={item.id} item={item} />
+          ))}
+        </div>
       </section>
 
       <footer className="home-footer" aria-label="Site footer">

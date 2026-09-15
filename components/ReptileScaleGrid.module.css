@@ -1,6 +1,7 @@
-.grid { display: grid; grid-template-columns: 1fr; gap: 8px; width: 100%; max-width: none; margin: 0; padding: 0 8px; }
+.section { width: 100%; min-width: 0; }
+.grid { display: flex; flex-direction: column; gap: 18px; width: 100%; min-width: 0; margin: 0; padding: 0; }
 .card { position: relative; width: 100%; overflow: hidden; aspect-ratio: 16 / 10; border: 1px solid #252525; border-radius: 20px; background: #000; }
-.cardTree { position: relative; grid-column: 1 / -1; width: 100%; overflow: hidden; aspect-ratio: 20 / 7; border: 1px solid #252525; border-radius: 20px; background: #000; }
+.cardTree { position: relative; width: 100%; overflow: hidden; aspect-ratio: 20 / 7; border: 1px solid #252525; border-radius: 20px; background: #000; }
 .cardImage, .cardTreeImage { position: absolute; inset: 0; display: block; width: 100%; height: 100%; object-fit: cover; }
 .cardImage { object-position: right center; }
 .cardTreeImage { object-position: center; }
@@ -12,7 +13,7 @@
 .cardCta { width: fit-content; margin-top: 16px; padding: 9px 17px; border: 1px solid #d9a368; border-radius: 9999px; background: rgba(0,0,0,.42); box-shadow: 0 0 12px rgba(217,163,104,.22); color: #d9a368; font-size: 10px; letter-spacing: .14em; text-decoration: none; backdrop-filter: blur(6px); transition: background .2s ease, box-shadow .2s ease, color .2s ease; }
 .cardCta:hover, .cardCta:focus-visible { background: #d9a368; box-shadow: 0 0 20px rgba(217,163,104,.45); color: #000; }
 .srOnly { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0; }
-@media (min-width: 768px) { .grid { grid-template-columns: 1fr 1fr; } .card { max-height: 450px; } .cardTree { max-height: 430px; } }
+@media (min-width: 768px) { .card { aspect-ratio: 2.35 / 1; } .cardTree { aspect-ratio: 2.8 / 1; } }
 @media (max-width: 540px) {
   .card { aspect-ratio: 16 / 10; }
   .cardTree { aspect-ratio: 16 / 9; }

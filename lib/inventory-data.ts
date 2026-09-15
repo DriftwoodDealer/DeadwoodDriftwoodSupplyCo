@@ -72,24 +72,40 @@ function fromProduct(row: ProductRow): InventoryItem {
 }
 
 export async function getPublishedInventory() {
+  const mockPublished = inventoryItems.filter((item) => item.status === "published");
   const supabase = getPublicClient();
   if (!supabase) {
-    return inventoryItems.filter((item) => item.status === "published");
+    return mockPublished;
   }
 
-  const { data, error } = await supabase
-    .from("products")
-    .select("*")
-    .eq("inventory_status", "published")
-    .order("created_at", { ascending: false });
+  try {
+    const { data, error } = await Promise.race([
+      supabase
+        .from("products")
+        .select("*")
+        .eq("inventory_status", "published")
+        .order("created_at", { ascending: false }),
+      new Promise<never>((_, reject) =>
+        setTimeout(() => reject(new Error("Supabase timeout")), 1500)
+      )
+    ]);
 
-  if (error || !data) {
-    return [];
+    if (error || !data || data.length === 0) {
+      return mockPublished;
+    }
+
+    const products = data as ProductRow[];
+    const media = await getPublicMedia(products.map((product) => product.id));
+    const dbItems = products.map((product) =>
+      fromProduct({ ...product, product_media: media.filter((item) => item.product_id === product.id) })
+    );
+
+    const dbSlugs = new Set(dbItems.map((i) => i.slug));
+    const remainingMock = mockPublished.filter((i) => !dbSlugs.has(i.slug));
+    return [...dbItems, ...remainingMock];
+  } catch {
+    return mockPublished;
   }
-
-  const products = data as ProductRow[];
-  const media = await getPublicMedia(products.map((product) => product.id));
-  return products.map((product) => fromProduct({ ...product, product_media: media.filter((item) => item.product_id === product.id) }));
 }
 
 export async function getFeaturedInventory() {
@@ -107,24 +123,38 @@ export async function getInventoryBySector(sector: Sector) {
 }
 
 export async function getInventoryBySlug(slug: string) {
+  // 1. Instant check from local catalogue
+  const mockItem = inventoryItems.find((item) => item.slug === slug);
+  if (mockItem) {
+    return mockItem;
+  }
+
+  // 2. Query Supabase with strict 1.5s timeout
   const supabase = getPublicClient();
-  if (!supabase) {
-    return inventoryItems.find((item) => item.slug === slug);
+  if (supabase) {
+    try {
+      const { data, error } = await Promise.race([
+        supabase
+          .from("products")
+          .select("*")
+          .eq("slug", slug)
+          .eq("inventory_status", "published")
+          .maybeSingle(),
+        new Promise<never>((_, reject) =>
+          setTimeout(() => reject(new Error("Supabase timeout")), 1500)
+        )
+      ]);
+
+      if (!error && data) {
+        const media = await getPublicMedia([(data as ProductRow).id]);
+        return fromProduct({ ...(data as ProductRow), product_media: media });
+      }
+    } catch {
+      // Ignore timeout and return undefined
+    }
   }
 
-  const { data, error } = await supabase
-    .from("products")
-    .select("*")
-    .eq("slug", slug)
-    .eq("inventory_status", "published")
-    .maybeSingle();
-
-  if (error || !data) {
-    return undefined;
-  }
-
-  const media = await getPublicMedia([(data as ProductRow).id]);
-  return fromProduct({ ...(data as ProductRow), product_media: media });
+  return undefined;
 }
 
 async function getPublicMedia(productIds: string[]) {
