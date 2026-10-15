@@ -79,7 +79,7 @@ function SectorTierStackContent({
 
   return (
     <>
-      <section className="deadwood-tier-section" aria-labelledby="sector-tier-heading">
+      <section className={`deadwood-tier-section ${sectorSlug === "reptile" ? "reptile-tier-section" : ""}`} aria-labelledby="sector-tier-heading">
         <div className="deadwood-tier-intro">
           <p className="eyebrow">{eyebrow}</p>
           <h2 id="sector-tier-heading" className="deadwood-tier-heading">
@@ -109,7 +109,7 @@ function SectorTierStackContent({
                   </div>
                 </div>
 
-                <div className={`tier-card-visual ${isPanoramic ? "tier-card-visual-panoramic" : ""}`}>
+                <div className={`tier-card-visual ${isPanoramic ? "tier-card-visual-panoramic" : ""}`} data-tier={tier.slug}>
                   <Image
                     src={tier.image}
                     alt={`${tier.name} demonstration`}

@@ -56,7 +56,7 @@ export const reptileStorefrontConfig: SectorStorefrontConfig = {
   hero: {
     title: "Reptiles & Bioactive Driftwood — Living Enclosures",
     desktopImage: "/assets/reptile/LIVING%20ENCLOSURES.jpg",
-    mobileImage: "/assets/reptile/reptile_mobile_landing.jpg",
+    mobileImage: "/assets/reptile/reptile_mobile_hero_fitted.jpg",
     alt: "Living Enclosures — Reptiles and Bioactive. Wood should feel like the environment is built around it.",
   },
   statement: {

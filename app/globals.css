@@ -3175,6 +3175,13 @@ body:has([class*="heroWrap"]) .site-header {
   width: 100%;
 }
 
+@media (min-width: 768px) {
+  .deadwood-tier-stack {
+    width: calc(100% - 280px);
+    margin-inline: auto;
+  }
+}
+
 .tier-card {
   position: relative;
   display: block;
@@ -3295,7 +3302,7 @@ body:has([class*="heroWrap"]) .site-header {
   top: 0;
   right: 0;
   bottom: 0;
-  width: 68%;
+  width: 58%;
   height: 100%;
   overflow: hidden;
   z-index: 1;
@@ -3349,79 +3356,161 @@ body:has([class*="heroWrap"]) .site-header {
 .tier-card-inner-panoramic .tier-card-copy {
   position: relative;
   z-index: 3;
-  width: min(44rem, 100%);
+  width: min(36rem, 55%);
   background: linear-gradient(90deg, rgba(10, 10, 12, 0.95) 0%, rgba(10, 10, 12, 0.85) 35%, rgba(10, 10, 12, 0.4) 68%, transparent 100%);
   border-radius: 18px 0 0 18px;
 }
 
-/* ── Mobile Tier Cards (Preserve Visual Composition: Image as Canvas + Layered Text) ── */
+/* ── Mobile & Tablet Tier Cards (Dedicated Side-by-Side: Tanks Never Covered By Text) ── */
 @media (max-width: 767px) {
   .tier-card-inner {
-    grid-template-columns: 1fr;
-    min-height: clamp(190px, 48vw, 230px);
+    display: grid;
+    grid-template-columns: 1.15fr 0.85fr;
+    align-items: stretch;
+    min-height: 205px;
     position: relative;
   }
   .tier-card-visual {
-    position: absolute;
-    inset: 0;
+    position: relative;
+    inset: auto;
     width: 100%;
     height: 100%;
-    z-index: 1;
-    -webkit-mask-image: linear-gradient(to right, transparent 0%, rgba(0,0,0,0.15) 15%, black 50%, black 100%);
-    mask-image: linear-gradient(to right, transparent 0%, rgba(0,0,0,0.15) 15%, black 50%, black 100%);
+    min-height: 205px;
+    overflow: hidden;
+    mask-image: linear-gradient(to right, transparent 0%, rgba(0,0,0,0.5) 15%, black 40%, black 100%);
+    -webkit-mask-image: linear-gradient(to right, transparent 0%, rgba(0,0,0,0.5) 15%, black 40%, black 100%);
   }
   .tier-card-img {
-    object-position: right center;
-    opacity: 0.85;
+    object-fit: cover;
+    object-position: 78% center;
+    opacity: 1;
+    transform: scale(1.08);
   }
   .tier-card-copy {
     position: relative;
-    z-index: 3;
+    z-index: 2;
     width: 100%;
-    padding: 1.15rem 1.15rem 1.25rem;
-    background: linear-gradient(90deg, rgba(10, 10, 12, 0.94) 0%, rgba(10, 10, 12, 0.82) 48%, rgba(10, 10, 12, 0.35) 80%, transparent 100%);
+    padding: 1.15rem 0.5rem 1.15rem 1.15rem;
+    background: transparent;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
   }
   .tier-card-title {
-    font-size: clamp(2rem, 7.5vw, 2.6rem);
-    line-height: 0.92;
-    margin: 0 0 0.35rem;
+    font-size: clamp(1.65rem, 6.5vw, 2.1rem);
+    line-height: 0.95;
+    margin: 0 0 0.25rem;
     text-shadow: 0 2px 10px rgba(0, 0, 0, 0.9);
   }
   .tier-card-range {
-    font-size: 0.68rem;
-    margin-bottom: 0.2rem;
+    font-size: 0.65rem;
+    margin-bottom: 0.15rem;
   }
   .tier-card-desc {
-    font-size: 0.8rem;
-    line-height: 1.45;
-    max-width: 30ch;
-    margin: 0 0 0.85rem;
+    font-size: 0.76rem;
+    line-height: 1.35;
+    max-width: none;
+    margin: 0 0 0.75rem;
     color: #d2cdc4;
   }
   .tier-card-action {
     margin-top: 0.15rem;
   }
   .tier-card-btn {
-    font-size: 0.65rem;
-    padding: 0.4rem 0.85rem;
+    font-size: 0.62rem;
+    padding: 0.38rem 0.75rem;
+    white-space: nowrap;
+    width: fit-content;
   }
   .tier-card-inner-panoramic {
-    min-height: clamp(200px, 52vw, 245px);
+    display: grid;
+    grid-template-columns: 1.15fr 0.85fr;
+    min-height: 205px;
   }
   .tier-card-inner-panoramic .tier-card-visual-panoramic {
-    position: absolute;
-    inset: 0;
+    position: relative;
+    inset: auto;
     width: 100%;
     height: 100%;
+    min-height: 205px;
+    mask-image: linear-gradient(to right, transparent 0%, rgba(0,0,0,0.5) 15%, black 40%, black 100%);
+    -webkit-mask-image: linear-gradient(to right, transparent 0%, rgba(0,0,0,0.5) 15%, black 40%, black 100%);
   }
   .tier-card-inner-panoramic .tier-card-img-panoramic {
-    object-position: center center;
-    opacity: 0.88;
+    object-position: 85% center;
+    opacity: 1;
+    transform: scale(1.15);
   }
   .tier-card-inner-panoramic .tier-card-copy {
     width: 100%;
-    background: linear-gradient(90deg, rgba(10, 10, 12, 0.94) 0%, rgba(10, 10, 12, 0.8) 55%, rgba(10, 10, 12, 0.3) 85%, transparent 100%);
-    border-radius: 18px;
+    background: transparent;
+    border-radius: 18px 0 0 18px;
+    padding: 1.15rem 0.5rem 1.15rem 1.15rem;
+  }
+}
+
+/* Keep reptile card imagery against the right edge at every screen size. */
+.reptile-tier-section .tier-card-img {
+  object-position: right center;
+  transform-origin: right center;
+}
+
+@media (min-width: 768px) {
+  .reptile-tier-section .tier-card-visual:not(.tier-card-visual-panoramic) {
+    width: 42%;
+  }
+}
+
+@media (max-width: 767px) {
+  .reptile-tier-section .tier-card-inner {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .reptile-tier-section .tier-card-copy {
+    width: 62%;
+    min-width: 0;
+  }
+
+  .reptile-tier-section .tier-card-visual {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    min-height: 0;
+    -webkit-mask-image: linear-gradient(to right, transparent, black 55%);
+    mask-image: linear-gradient(to right, transparent, black 55%);
+  }
+
+  .reptile-tier-section .tier-card-img,
+  .reptile-tier-section .tier-card-inner-panoramic .tier-card-img-panoramic {
+    object-fit: contain;
+    object-position: right center;
+    transform: none;
+  }
+
+  .reptile-tier-section .tier-card-btn {
+    max-width: 100%;
+    white-space: normal;
+  }
+
+  .reptile-tier-section .tier-card-visual:not(.tier-card-visual-panoramic) .tier-card-img {
+    transform: translateX(7%);
+  }
+
+  .reptile-tier-section .tier-card-visual[data-tier="centerpiece-xxl"] .tier-card-img {
+    transform: translateX(12%);
+  }
+
+  .reptile-tier-section .tier-card-inner-panoramic .tier-card-copy {
+    width: 100%;
+    padding-bottom: 5.5rem;
+  }
+
+  .reptile-tier-section .tier-card-inner-panoramic .tier-card-visual-panoramic {
+    inset: auto 0 0;
+    height: auto;
+    aspect-ratio: 3792 / 544;
+    -webkit-mask-image: none;
+    mask-image: none;
   }
 }
 
@@ -3448,6 +3537,7 @@ dialog::backdrop {
   align-items: center;
   justify-content: center;
   padding: 1rem;
+  overflow-y: auto;
   background: rgba(0, 0, 0, 0.82);
   backdrop-filter: blur(20px);
   animation: fadeIn 180ms ease;
@@ -3456,6 +3546,7 @@ dialog::backdrop {
 .nano-modal-panel {
   position: relative;
   width: min(490px, calc(100vw - 2rem));
+  max-height: calc(100dvh - 2rem);
   border-radius: 1.25rem;
   overflow: hidden;
   background: #121214;
@@ -3499,8 +3590,17 @@ dialog::backdrop {
   overflow: hidden;
 }
 .nano-modal-image { object-fit: contain; padding: 1rem; }
+.nano-modal-image-label {
+  position: absolute;
+  left: 1rem;
+  bottom: 1rem;
+  padding: 1.2rem 1.4rem 1rem;
+  background: rgba(8, 8, 10, 0.86);
+}
+.nano-modal-image-label .nano-modal-title { font-size: 3.4rem; }
+.nano-modal-image-label .nano-modal-range { margin-top: .45rem; font-size: .95rem; }
 
-.nano-modal-body { padding: 1.5rem; }
+.nano-modal-body { padding: 1.5rem; overflow-y: auto; }
 .nano-modal-header { margin-bottom: 0.85rem; }
 
 .nano-modal-title {
@@ -3585,6 +3685,30 @@ dialog::backdrop {
   line-height: 1.5;
 }
 
+@media (max-width: 767px) {
+  .tier-card-panoramic-wrap {
+    overflow: visible;
+    min-height: 150px;
+    margin-bottom: 4.75rem;
+  }
+  .tier-card-panoramic-wrap .tier-card-inner-panoramic {
+    min-height: 150px;
+  }
+  .tier-card-panoramic-wrap .tier-card-inner-panoramic .tier-card-copy {
+    padding-bottom: 1.15rem;
+  }
+  .tier-card-panoramic-wrap .tier-card-inner-panoramic .tier-card-visual-panoramic {
+    height: 110px;
+    aspect-ratio: auto;
+  }
+  .tier-card-panoramic-wrap .tier-card-action {
+    position: absolute;
+    left: 1.15rem;
+    bottom: -3.8rem;
+    z-index: 4;
+  }
+}
+
 /* ============================================================
    PIECE BROWSER MODAL (Apple / Linear Spacious Split-Inspector)
    ============================================================ */
@@ -3597,6 +3721,7 @@ dialog::backdrop {
   align-items: center;
   justify-content: center;
   padding: 1rem;
+  overscroll-behavior: contain;
   background: rgba(0, 0, 0, 0.84);
   backdrop-filter: blur(22px);
   animation: fadeIn 180ms ease;

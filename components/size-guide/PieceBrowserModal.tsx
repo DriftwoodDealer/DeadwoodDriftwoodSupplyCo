@@ -65,6 +65,15 @@ export function PieceBrowserModal({ tier, onClose }: PieceBrowserModalProps) {
     return () => document.removeEventListener("keydown", onKeyDown);
   }, [isOpen, selectedPiece, onClose]);
 
+  useEffect(() => {
+    if (!isOpen) return;
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.body.style.overflow = previousOverflow;
+    };
+  }, [isOpen]);
+
   function handleAddToCart(item: InventoryItem) {
     addItem({
       id: item.id,
