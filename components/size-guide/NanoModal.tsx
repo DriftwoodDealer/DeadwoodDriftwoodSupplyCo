@@ -22,6 +22,15 @@ export function NanoModal({ isOpen, onClose, tier }: NanoModalProps) {
     return () => document.removeEventListener("keydown", onKeyDown);
   }, [isOpen, onClose]);
 
+  useEffect(() => {
+    if (!isOpen) return;
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.body.style.overflow = previousOverflow;
+    };
+  }, [isOpen]);
+
   function handleAddToCart() {
     addItem({
       id: `nano-curated-${Date.now()}`,
@@ -62,16 +71,13 @@ export function NanoModal({ isOpen, onClose, tier }: NanoModalProps) {
             sizes="(max-width: 640px) 90vw, 480px"
             className="nano-modal-image"
           />
+          <div className="nano-modal-image-label">
+            <h2 id="nano-modal-title" className="nano-modal-title">{tier.name}</h2>
+            <p className="nano-modal-range">{tier.range}</p>
+          </div>
         </div>
 
         <div className="nano-modal-body">
-          <div className="nano-modal-header">
-            <h2 id="nano-modal-title" className="nano-modal-title">
-              {tier.name}
-            </h2>
-            <p className="nano-modal-range">{tier.range}</p>
-          </div>
-
           <p className="nano-modal-copy">{tier.rangeDescription}</p>
 
           <ul className="nano-modal-features">

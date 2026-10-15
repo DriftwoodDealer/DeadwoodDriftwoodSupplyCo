@@ -11,7 +11,7 @@ export default function HomePage() {
       <section className="hero-stage home-hero">
         <div className="hero-image-band">
           <Image
-            src="/assets/images/DEADWOODdark.png"
+            src="/assets/images/DEADWOODdark.webp"
             alt="Deadwood driftwood hero artwork"
             width={3344}
             height={1882}

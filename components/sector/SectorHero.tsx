@@ -13,7 +13,10 @@ export function SectorHero({ title, desktopImage, mobileImage, alt }: SectorHero
       <section className={styles.hero} aria-label={title}>
         <picture className="sector-hero-picture">
           {mobileImage && (
-            <source media="(max-width: 768px)" srcSet={mobileImage} />
+            <source
+              media="(max-width: 1024px) and (orientation: portrait), (max-width: 768px)"
+              srcSet={mobileImage}
+            />
           )}
           <img
             src={desktopImage}
