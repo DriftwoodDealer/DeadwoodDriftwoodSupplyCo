@@ -55,6 +55,11 @@ export default async function AdminPage() {
           <h2>Access and APIs</h2>
           <p>Map roles, permissions, connection status, and future backend services.</p>
         </Link>
+        <Link className="admin-launch glass-panel" href="/admin/wholesale">
+          <p className="eyebrow">Trade applications</p>
+          <h2>Review business inquiries</h2>
+          <p>Read new wholesale applications and track their review status.</p>
+        </Link>
         <Link className="admin-launch glass-panel" href="/shop">
           <p className="eyebrow">Storefront</p>
           <h2>Preview public inventory</h2>

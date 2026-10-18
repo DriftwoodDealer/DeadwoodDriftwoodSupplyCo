@@ -1,71 +1,73 @@
-import Link from "next/link";
+import { WholesaleApplicationForm } from "@/components/wholesale/WholesaleApplicationForm";
+
+const reviewSteps = [
+  {
+    number: "01",
+    title: "Tell us about your business",
+    copy: "Share your shop, studio, or trade work so we can understand how you serve your customers.",
+  },
+  {
+    number: "02",
+    title: "We review your application",
+    copy: "Our team may follow up to learn more or confirm a few details before approving trade access.",
+  },
+  {
+    number: "03",
+    title: "Plan the right supply",
+    copy: "If it’s a fit, we’ll talk through available pieces, quantities, pricing, and delivery directly with you.",
+  },
+];
 
 export default function WholesalePage() {
   return (
-    <section className="page-shell">
-      <div className="shop-hero">
-        <div>
-          <p className="eyebrow">Verified Trade</p>
-          <h1 className="section-heading">Wholesale access is gated on purpose.</h1>
+    <section className="page-shell wholesale-page">
+      <header className="wholesale-hero">
+        <div className="wholesale-hero-copy">
+          <p className="eyebrow">Trade &amp; Professional Buyers</p>
+          <h1 className="section-heading">Good materials. A direct relationship.</h1>
+          <p className="section-copy">
+            We work with independent shops, builders, studios, and established businesses
+            that use natural materials in thoughtful ways. Tell us about your work and
+            what you’re looking for. We’ll get back to you personally.
+          </p>
+          <a className="button primary wholesale-hero-button" href="#wholesale-application">
+            Apply for Wholesale Access <span aria-hidden="true">↓</span>
+          </a>
         </div>
-        <p className="section-copy">
-          Private pricing, recurring shipments, and contract discounts should only unlock
-          after a serious verification process. This prevents bulk resellers from stripping
-          the best material out of public inventory.
-        </p>
-      </div>
+      </header>
 
-      <section className="store-section protocol-band" aria-labelledby="verification-heading">
-        <div>
-          <p className="eyebrow">Verification</p>
-          <h2 id="verification-heading" className="section-heading">
-            Business proof before private pricing.
-          </h2>
+      <section className="wholesale-review" aria-labelledby="wholesale-review-title">
+        <div className="wholesale-section-heading">
+          <p className="eyebrow">A straightforward process</p>
+          <h2 id="wholesale-review-title">Start with a conversation.</h2>
         </div>
-        <div className="protocol-steps">
-          <div>
-            <span>01</span>
-            <strong>Business identity</strong>
-            <p>Legal business name, website/social presence, resale/tax info, and contact details.</p>
-          </div>
-          <div>
-            <span>02</span>
-            <strong>Use-case review</strong>
-            <p>Shop, studio, installer, taxidermist, or contractor status must be clear.</p>
-          </div>
-          <div>
-            <span>03</span>
-            <strong>Contract tier</strong>
-            <p>Recurring shipment terms can scale discounts only after approval.</p>
-          </div>
+        <div className="wholesale-review-grid">
+          {reviewSteps.map((step) => (
+            <article className="wholesale-review-card" key={step.number}>
+              <span className="wholesale-review-number">{step.number}</span>
+              <h3>{step.title}</h3>
+              <p>{step.copy}</p>
+            </article>
+          ))}
         </div>
       </section>
 
-      <section className="store-section service-grid" aria-label="Wholesale paths">
-        <article className="service-panel glass-panel">
-          <p className="eyebrow">Recurring Supply</p>
-          <h2 className="product-title">Shipment contracts</h2>
-          <p className="section-copy">
-            Future tiers can support monthly, quarterly, or seasonal supply agreements with
-            stronger discounts for longer commitments.
+      <section className="wholesale-application-section" id="wholesale-application" aria-labelledby="wholesale-application-title">
+        <div className="wholesale-application-intro">
+          <p className="eyebrow">Trade application</p>
+          <h2 id="wholesale-application-title">Let’s get to know your business.</h2>
+          <p>
+            A website or social profile helps us understand your work, but neither is
+            required. A home-based business is welcome—just use the location where you
+            operate or receive deliveries.
           </p>
-        </article>
-
-        <article className="service-panel glass-panel">
-          <p className="eyebrow">Not Open Market</p>
-          <h2 className="product-title">No anonymous bulk buying</h2>
-          <p className="section-copy">
-            Wholesale should protect the brand, the best pieces, and the public customer
-            experience. Access stays permissioned.
-          </p>
-        </article>
+          <div className="wholesale-privacy-note">
+            <span aria-hidden="true">◇</span>
+            <p>Your details stay private and are used only to review and respond to this application.</p>
+          </div>
+        </div>
+        <WholesaleApplicationForm />
       </section>
-
-      <div className="button-row">
-        <Link className="button primary" href="/shop">
-          Shop Overview
-        </Link>
-      </div>
     </section>
   );
 }

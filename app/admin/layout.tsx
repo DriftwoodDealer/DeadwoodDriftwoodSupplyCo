@@ -35,6 +35,7 @@ export default async function AdminLayout({ children }: Readonly<{ children: Rea
         <nav aria-label="Admin navigation">
           <Link href="/admin">Overview</Link>
           <Link href="/admin/inventory">Inventory</Link>
+          <Link href="/admin/wholesale">Trade applications</Link>
           <Link href="/admin/cms">Composer</Link>
           <Link href="/admin/settings">Settings</Link>
           <SignOutButton />

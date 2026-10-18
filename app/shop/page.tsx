@@ -173,14 +173,14 @@ export default async function ShopPage() {
         </article>
 
         <article className="service-panel glass-panel">
-          <p className="eyebrow">Verified Wholesale</p>
-          <h2 className="product-title">Bulk access is earned, not open.</h2>
+          <p className="eyebrow">For Trade &amp; Professional Buyers</p>
+          <h2 className="product-title">Source natural materials with us.</h2>
           <p className="section-copy">
-            Shops will need business verification before private pricing, recurring
-            shipments, contract tiers, and larger discounts are visible.
+            Shops, studios, and builders can apply to discuss pieces, quantities, and supply
+            that fit the work they do.
           </p>
           <a className="button" href="/wholesale">
-            Verification Preview
+            Apply for Wholesale Access
           </a>
         </article>
       </section>

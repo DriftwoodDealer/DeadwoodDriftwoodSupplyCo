@@ -23,15 +23,12 @@ export function SiteHeader() {
     setMenuOpen(false);
   }, [pathname]);
 
-  // Prevent background scroll when mobile menu is open
+  // Lock the page while the drawer is open, then restore the exact prior style.
   useEffect(() => {
-    if (menuOpen) {
-      document.body.style.overflow = "hidden";
-    } else {
-      document.body.style.overflow = "";
-    }
+    const previousOverflow = document.body.style.overflow;
+    if (menuOpen) document.body.style.overflow = "hidden";
     return () => {
-      document.body.style.overflow = "";
+      document.body.style.overflow = previousOverflow;
     };
   }, [menuOpen]);
 
