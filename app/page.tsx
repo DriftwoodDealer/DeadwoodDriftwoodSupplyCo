@@ -44,10 +44,10 @@ export default function HomePage() {
 
         <div className="home-service-row">
           <Link className="service-panel glass-panel" href="/wholesale">
-            <p className="eyebrow">Verified Trade</p>
-            <h3 className="product-title">Wholesale access is gated.</h3>
+            <p className="eyebrow">For Professional Buyers</p>
+            <h3 className="product-title">A better way to source for your business.</h3>
             <p className="section-copy">
-              Private pricing and recurring shipment contracts require business verification.
+              Tell us about your shop or studio. We’ll learn what you need and talk through trade options.
             </p>
           </Link>
 
@@ -98,8 +98,8 @@ export default function HomePage() {
       <footer className="home-footer" aria-label="Site footer">
         <div className="home-footer-content">
           <div className="home-footer-brand">DEADWOOD: DRIFTWOOD SUPPLY CO. LLC</div>
-          <a className="home-footer-email" href="mailto:deadwooddriftwood@gmail.com">
-            deadwooddriftwood@gmail.com
+          <a className="home-footer-email" href="mailto:deadwooddriftwood@gmail.com" aria-label="Email Deadwood Driftwood Supply Co.">
+            Email us
           </a>
           <div className="home-footer-links">
             <Link href="/terms">Terms</Link>
