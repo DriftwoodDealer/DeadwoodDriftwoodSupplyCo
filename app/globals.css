@@ -4332,6 +4332,9 @@ dialog::backdrop {
   color: rgba(216, 210, 198, 0.75);
 }
 
+.tree-page-mobile-intro,
+.tree-page-mobile-cta { display: none; }
+
 .tree-page-service {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
@@ -4504,6 +4507,62 @@ dialog::backdrop {
 .tree-page-cta-btn:hover { background: #d98e36; }
 .tree-page-cta-btn:active { transform: scale(0.99); }
 .tree-page-cta-btn:disabled { opacity: 0.6; cursor: not-allowed; }
+
+@media (max-width: 767px) {
+  .tree-page-hero {
+    width: calc(100% - 24px);
+    height: clamp(250px, 68vw, 360px);
+    margin: 0.75rem auto 1.25rem;
+    border-radius: 14px;
+  }
+  .tree-page-hero-overlay {
+    background: linear-gradient(180deg, rgba(0, 0, 0, 0.06) 35%, rgba(0, 0, 0, 0.76) 100%);
+  }
+  .tree-page-hero-content {
+    inset: auto 0 0;
+    padding: 1.1rem 1.15rem;
+  }
+  .tree-page-headline {
+    font-size: clamp(3rem, 14vw, 4.6rem);
+    line-height: 0.9;
+    color: #fff;
+  }
+  .tree-page-eyebrow {
+    margin: 0.45rem 0 0;
+    color: #fff;
+    font-size: 0.72rem;
+    letter-spacing: 0.12em;
+  }
+  .tree-page-body { padding-top: 0.25rem; }
+  .tree-page-back { margin: 0 0 1rem; }
+  .tree-page-desktop-content { display: none; }
+  .tree-page-mobile-intro {
+    display: block;
+    margin: 0 auto 2rem;
+    padding: 0 0.25rem;
+  }
+  .tree-page-mobile-intro .tree-page-copy {
+    margin: 0 0 1rem;
+    color: rgba(255, 255, 255, 0.82);
+    font-size: 0.98rem;
+    line-height: 1.6;
+  }
+  .tree-page-mobile-cta {
+    display: inline-flex;
+    min-height: 48px;
+    align-items: center;
+    justify-content: center;
+    padding: 0.8rem 1.15rem;
+    border-radius: 10px;
+    background: #c87d25;
+    color: #0c0803;
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-align: center;
+    text-transform: uppercase;
+  }
+}
 
 .tree-inquiry-success {
   margin-top: 1.5rem;
@@ -5122,6 +5181,101 @@ dialog::backdrop {
 .piece-inspector-size-pill .size-scale {
   color: #c87d25;
   font-weight: 600;
+}
+
+/* Reptile storefront: give Tree XXXL its requested stacked mobile composition. */
+@media (max-width: 767px) {
+  .reptile-tier-section .tier-card-panoramic-wrap {
+    min-height: 0;
+    padding: 0;
+  }
+
+  .reptile-tier-section .tier-card-inner-panoramic {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-rows: 190px auto auto auto;
+    min-height: 0;
+    padding: 0 0 1rem;
+    text-align: left;
+  }
+
+  .reptile-tier-section .tier-card-inner-panoramic .tier-card-copy {
+    display: contents;
+  }
+
+  .reptile-tier-section .tier-card-inner-panoramic .tier-card-range,
+  .reptile-tier-section .tier-card-inner-panoramic .tier-card-title {
+    grid-column: 1;
+    z-index: 3;
+    justify-self: start;
+    margin-left: 1rem;
+    color: #fff;
+  }
+
+  .reptile-tier-section .tier-card-inner-panoramic .tier-card-range {
+    grid-row: 1;
+    align-self: start;
+    margin-top: 1rem;
+    font-size: 0.7rem;
+    text-shadow: 0 1px 8px rgba(0, 0, 0, 0.85);
+  }
+
+  .reptile-tier-section .tier-card-inner-panoramic .tier-card-title {
+    grid-row: 1;
+    align-self: start;
+    margin-top: 2.2rem;
+    font-size: clamp(2.35rem, 10vw, 3.2rem);
+    line-height: 0.9;
+    text-shadow: 0 2px 12px rgba(0, 0, 0, 0.9);
+  }
+
+  .reptile-tier-section .tier-card-inner-panoramic .tier-card-desc {
+    grid-column: 1;
+    grid-row: 2;
+    margin: 0;
+    padding: 1rem 1rem 0.35rem;
+    color: #d2cdc4;
+    font-size: 0.86rem;
+    line-height: 1.5;
+  }
+
+  .reptile-tier-section .tier-card-inner-panoramic .tier-card-action {
+    position: static;
+    grid-column: 1;
+    grid-row: 3;
+    margin: 0;
+    padding: 0.5rem 1rem 0;
+  }
+
+  .reptile-tier-section .tier-card-inner-panoramic .tier-card-btn {
+    display: inline-flex;
+    width: fit-content;
+    min-height: 42px;
+    align-items: center;
+    padding: 0.65rem 0.9rem;
+    white-space: normal;
+  }
+
+  .reptile-tier-section .tier-card-inner-panoramic .tier-card-visual-panoramic {
+    position: relative;
+    inset: auto;
+    grid-column: 1;
+    grid-row: 1;
+    width: 100%;
+    height: 190px;
+    min-height: 0;
+    aspect-ratio: auto;
+    overflow: hidden;
+    -webkit-mask-image: none;
+    mask-image: none;
+  }
+
+  .reptile-tier-section .tier-card-inner-panoramic .tier-card-img-panoramic {
+    object-fit: cover;
+    object-position: center 45%;
+    opacity: 1;
+    transform: none;
+  }
 }
 
 
