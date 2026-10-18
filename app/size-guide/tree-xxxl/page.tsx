@@ -28,18 +28,27 @@ export default function TreeXXXLPage() {
           <div className="tree-page-hero-overlay" />
         </div>
         <div className="tree-page-hero-content">
-          <p className="tree-page-eyebrow">60 to 80+ inches</p>
           <h1 className={`${anton.className} tree-page-headline`}>TREE XXXL</h1>
-          <p className="tree-page-tagline">Zoo-level. Nationwide.</p>
+          <p className="tree-page-eyebrow">60 to 80+ inches</p>
         </div>
       </div>
 
       <div className="tree-page-body page-shell">
-        <Link href="/shop/reptile" className="tree-page-back">
-          ← Back to Reptile Hardscape
-        </Link>
+        <div className="tree-page-mobile-intro">
+          <p className="tree-page-copy">
+            One-of-a-kind, trunk-scale driftwood for statement builds and large spaces.
+          </p>
+          <a className="tree-page-mobile-cta" href="#tree-inquiry">
+            Inquire About Tree XXXL
+          </a>
+        </div>
 
-        <div className="tree-page-intro">
+        <div className="tree-page-desktop-content">
+          <Link href="/shop/reptile" className="tree-page-back">
+            ← Back to Reptile Hardscape
+          </Link>
+
+          <div className="tree-page-intro">
           <p className="eyebrow">What Tree XXXL means</p>
           <h2 className={`${anton.className} tree-page-section-heading`}>
             THIS ISN&apos;T JUST DRIFTWOOD.<br />IT&apos;S ARCHITECTURE.
@@ -50,9 +59,9 @@ export default function TreeXXXLPage() {
           <p className="tree-page-copy">
             Every Tree XXXL piece is individually documented, power washed, inspected, and heat-treated at 275°F before staging. Vault-level photography and GPS provenance data are available for select finds.
           </p>
-        </div>
+          </div>
 
-        <div className="tree-page-service">
+          <div className="tree-page-service">
           <div className="tree-page-service-card">
             <p className="eyebrow">The Delivery</p>
             <h3 className={`${anton.className} tree-page-service-title`}>WE DON&apos;T SHIP IT. WE BRING IT.</h3>
@@ -76,9 +85,10 @@ export default function TreeXXXLPage() {
               Tell us about your space and what you need. We&apos;ll source the right piece from the archive, walk you through photos and dimensions, provide a freight and installation quote, and handle everything from there. No surprises.
             </p>
           </div>
-        </div>
+          </div>
 
-        <TreeInquirySection />
+          <div id="tree-inquiry"><TreeInquirySection /></div>
+        </div>
       </div>
     </div>
   );
