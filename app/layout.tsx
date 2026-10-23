@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Anton } from "next/font/google";
 import { CartProvider } from "@/components/cart/CartContext";
 import { SiteHeader } from "@/components/navigation/SiteHeader";
+import { SiteFooter } from "@/components/layout/SiteFooter";
 import { ScrollFadeController } from "@/components/scroll/ScrollFadeController";
 import "./globals.css";
 
@@ -30,6 +31,7 @@ export default function RootLayout({
           <SiteHeader />
           <ScrollFadeController />
           <main>{children}</main>
+          <SiteFooter />
         </CartProvider>
       </body>
     </html>

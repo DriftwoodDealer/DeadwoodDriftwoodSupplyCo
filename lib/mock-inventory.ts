@@ -8,6 +8,7 @@ export type Sector = {
   eyebrow: string;
   description: string;
   cta: string;
+  // First alias is the canonical inventory category; remaining aliases are descriptive only.
   aliases: string[];
 };
 
@@ -292,7 +293,7 @@ export const inventoryItems: InventoryItem[] = [
     slug: "gallery-silver-root",
     title: "Gallery Silver Root",
     sector: "Reptile",
-    sectors: ["Reptile", "Sculptural Relics", "Landscaping"],
+    sectors: ["Reptile", "Sculptural Relics"],
     sizeClass: "Medium",
     price: 135,
     status: "published",
@@ -381,12 +382,12 @@ export function getFeaturedInventory() {
 }
 
 export function getVaultInventory() {
-  return getPublishedInventory().filter((item) => item.vault);
+  return getPublishedInventory().filter((item) => item.vault && item.sector === "Sculptural Relics");
 }
 
 export function getInventoryBySector(sector: Sector) {
   return getPublishedInventory().filter((item) =>
-    item.sectors.some((itemSector) => sector.aliases.includes(itemSector))
+    item.sector === sector.aliases[0]
   );
 }
 

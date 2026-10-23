@@ -113,12 +113,12 @@ export async function getFeaturedInventory() {
 }
 
 export async function getVaultInventory() {
-  return (await getPublishedInventory()).filter((item) => item.vault);
+  return (await getPublishedInventory()).filter((item) => item.vault && item.sector === "Sculptural Relics");
 }
 
 export async function getInventoryBySector(sector: Sector) {
   return (await getPublishedInventory()).filter((item) =>
-    item.sectors.some((itemSector) => sector.aliases.includes(itemSector))
+    item.sector === sector.aliases[0]
   );
 }
 

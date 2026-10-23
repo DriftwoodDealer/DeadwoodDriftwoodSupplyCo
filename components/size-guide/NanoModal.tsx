@@ -8,7 +8,7 @@ import type { SizeClassEntry } from "@/lib/mock-inventory";
 type NanoModalProps = {
   isOpen: boolean;
   onClose: () => void;
-  tier: SizeClassEntry;
+  tier: Omit<SizeClassEntry, "name"> & { name: string };
 };
 
 export function NanoModal({ isOpen, onClose, tier }: NanoModalProps) {

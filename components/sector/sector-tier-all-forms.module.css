@@ -1,0 +1,42 @@
+.landscapeAllForms {
+  position: relative;
+  isolation: isolate;
+  display: grid;
+  width: 100vw;
+  min-height: 13rem;
+  aspect-ratio: 16 / 9;
+  margin: 3.5rem calc(50% - 50vw) 0;
+  place-items: center;
+  background-color: #050505;
+  background-image: linear-gradient(rgba(5,5,5,.5),rgba(5,5,5,.5)), url("/assets/landscaping/housewood.png");
+  background-position: center;
+  background-size: 100% 100%, contain;
+  background-repeat: no-repeat;
+  background-attachment: scroll, fixed;
+}
+
+.landscapeAllForms > button {
+  position: relative;
+  max-width: calc(100% - 2rem);
+  border-color: #d9a368;
+  color: #fff5e5;
+  background: rgba(9,8,7,.9);
+}
+
+.landscapeAllForms > button:hover {
+  background: #d9a368;
+}
+
+.landscapeAllForms > button:focus-visible {
+  outline: 2px solid #fff5e5;
+  outline-offset: 5px;
+}
+
+@media (max-width: 760px) {
+  .landscapeAllForms { margin-top: 2rem; }
+}
+
+/* Touch browsers may render fixed backgrounds inconsistently. */
+@media (hover: none), (prefers-reduced-motion: reduce) {
+  .landscapeAllForms { background-attachment: scroll; }
+}

@@ -6,9 +6,11 @@ import { Suspense, useEffect, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { Anton } from "next/font/google";
 import type { SectorTier } from "@/lib/sector-storefront-config";
+import allFormsStyles from "./sector-tier-all-forms.module.css";
 import { ALL_FORMS_TIER } from "@/lib/mock-inventory";
 import { NanoModal } from "@/components/size-guide/NanoModal";
 import { PieceBrowserModal } from "@/components/size-guide/PieceBrowserModal";
+import type { InventoryItem } from "@/lib/mock-inventory";
 
 const anton = Anton({ weight: "400", subsets: ["latin"], display: "swap" });
 
@@ -18,6 +20,7 @@ type SectorTierStackProps = {
   subhead: string;
   tiers: SectorTier[];
   sectorSlug?: string;
+  inventory?: InventoryItem[];
 };
 
 function SectorTierStackContent({
@@ -26,6 +29,7 @@ function SectorTierStackContent({
   subhead,
   tiers,
   sectorSlug = "reptile",
+  inventory,
 }: SectorTierStackProps) {
   const searchParams = useSearchParams();
   const router = useRouter();
@@ -149,12 +153,12 @@ function SectorTierStackContent({
           })}
         </div>
 
-        <div className="deadwood-tier-all-forms">
+        <div className={sectorSlug === "landscaping" ? allFormsStyles.landscapeAllForms : "deadwood-tier-all-forms"}>
           <button
             type="button"
             className="deadwood-browse-all-btn"
             onClick={() => handleCardClick(ALL_FORMS_TIER as SectorTier)}
-            aria-label="Browse all active driftwood forms across sizes"
+            aria-label={`Browse all ${sectorSlug} driftwood forms across sizes`}
           >
             Browse All Forms
           </button>
@@ -172,6 +176,8 @@ function SectorTierStackContent({
       <PieceBrowserModal
         tier={browserTier}
         onClose={handleCloseBrowser}
+        inventory={inventory}
+        sectorSlug={sectorSlug}
       />
     </>
   );

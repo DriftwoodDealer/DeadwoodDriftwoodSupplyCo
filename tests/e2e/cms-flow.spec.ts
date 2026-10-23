@@ -30,7 +30,7 @@ test("admin can publish a Nano listing and open its public detail", async ({ pag
   await page.getByRole("button", { name: "Save Listing" }).click();
   await expect(page.getByRole("status")).toContainText("Published", { timeout: 15_000 });
 
-  await page.goto("/shop");
+  await page.goto("/shop/reptile");
   const card = page.locator(`a[href="/shop/${slug}"]`).first();
   await expect(card).toBeVisible({ timeout: 15_000 });
   await card.click();

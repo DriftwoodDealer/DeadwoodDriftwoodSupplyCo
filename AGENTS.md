@@ -23,6 +23,10 @@ Before marking work ready for human testing, run `npm run typecheck`, `npm run l
 
 Use TypeScript with strict checking enabled by `tsconfig.json`. Use the existing App Router pattern in `app/`, path aliases through `@/*`, and CSS classes from `app/globals.css` unless a new component-level pattern is clearly needed. Keep the DEADWOOD visual language dark, restrained, and editorial. Avoid adding heavy dependencies before checking whether the current Next.js, React, and CSS setup is enough.
 
+## Sector Inventory Rules
+
+Each piece belongs to one primary sector. Public listings and “Browse All” dialogs must filter by that assigned category, never by secondary use/fit tags. Do not display mixed-sector product grids on the homepage, shop overview, or featured/Vault sections. Global shopping links lead to `/shop`, which is a sector selector; each sector then shows only its own inventory. Product-detail return links must lead back to the piece’s assigned sector.
+
 ## TODO Signoff Rules
 
 Only check a `TODO.md` box after both AI and human verification are complete. The expected flow is: implement the item, run typecheck/lint/build, give Mark specific manual test steps, wait for Mark to confirm the manual tests passed, then check the box. If tests fail or Mark has not confirmed, leave the box unchecked and add a short note if useful.

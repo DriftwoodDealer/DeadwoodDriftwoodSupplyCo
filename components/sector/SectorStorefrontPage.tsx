@@ -38,6 +38,7 @@ export function SectorStorefrontPage({
           eyebrow={tierSection.eyebrow}
           title={tierSection.title}
           subhead={tierSection.subhead}
+          inventory={items}
           sectorSlug={config.slug}
         />
 

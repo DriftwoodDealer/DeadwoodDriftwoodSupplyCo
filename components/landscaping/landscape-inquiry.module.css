@@ -1,0 +1,85 @@
+ .requestCard {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.5rem;
+  margin-top: 1.5rem;
+  padding: 1.4rem 0;
+  border: 0;
+  border-top: 1px solid rgba(217,163,104,.3);
+  border-bottom: 1px solid rgba(255,255,255,.1);
+  color: #f5f1e9;
+  background: transparent;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+  transition: border-color 180ms ease;
+}
+.requestCard:hover { border-top-color: #d9a368; }
+.requestCopy { display: grid; gap: .4rem; }
+.requestCopy strong { font-size: 1.1rem; font-weight: 500; letter-spacing: -.02em; }
+.requestCopy > span { color: #bcb5aa; font-size: .85rem; line-height: 1.5; }
+.requestLink { display: inline-flex; align-items: center; gap: 1.1rem; flex-shrink: 0; color: #e0ad78; font-size: .72rem; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; }
+.requestLink > span { font-size: 1.1rem; transition: transform 180ms ease; }
+.requestCard:hover .requestLink > span { transform: translate(2px,-2px); }
+.requestCard:focus-visible, .inlineButton:focus-visible, .submitButton:focus-visible, .closeButton:focus-visible { outline: 2px solid #f5f1e9; outline-offset: 5px; }
+.inlineButton, .submitButton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: .65rem;
+  min-height: 2.8rem;
+  padding: .75rem 1rem;
+  border: 1px solid #d9a368;
+  border-radius: 999px;
+  color: #d9a368;
+  background: transparent;
+  font: inherit;
+  font-size: .7rem;
+  font-weight: 700;
+  letter-spacing: .12em;
+  text-decoration: none;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+.inlineButton:hover, .submitButton:hover { color: #0a0908; background: #d9a368; }
+.backdrop { width: 100%; max-width: none; height: 100%; max-height: none; margin: 0; border: 0; color: inherit; position: fixed; z-index: 1200; inset: 0; display: grid; place-items: center; padding: 1rem; background: rgba(0,0,0,.78); backdrop-filter: blur(10px); }
+.backdrop::backdrop { background: transparent; }
+.dialog { width: min(100%, 48rem); max-height: min(92vh, 58rem); overflow: auto; border: 1px solid rgba(217,163,104,.35); border-radius: 1.1rem; background: #10100f; box-shadow: 0 1.5rem 6rem rgba(0,0,0,.65); }
+.dialogHeader { position: sticky; z-index: 1; top: 0; display: flex; align-items: flex-start; justify-content: space-between; gap: 1rem; padding: 1.5rem 1.5rem 1.15rem; border-bottom: 1px solid rgba(255,255,255,.08); background: rgba(16,16,15,.96); backdrop-filter: blur(12px); }
+.dialogHeader h2 { max-width: 35rem; margin: .4rem 0 0; color: #fff; font-family: var(--font-anton, Impact, sans-serif); font-size: clamp(1.8rem, 5vw, 2.7rem); font-weight: 400; line-height: .98; text-transform: uppercase; }
+.closeButton { flex: 0 0 auto; width: 2.5rem; height: 2.5rem; border: 1px solid rgba(255,255,255,.2); border-radius: 50%; color: #eee; background: transparent; font-size: 1.5rem; cursor: pointer; }
+.form { display: grid; gap: 1.1rem; padding: 1.5rem; }
+.fields { display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 1rem; }
+.field { display: grid; gap: .45rem; color: #e6dfd4; font-size: .82rem; font-weight: 600; }
+.field > span { color: #9b9388; font-size: .75rem; font-weight: 400; }
+.field input, .field select, .field textarea { width: 100%; min-width: 0; border: 1px solid rgba(255,255,255,.16); border-radius: .45rem; padding: .78rem .85rem; outline: none; color: #f5f1e9; background: #090909; font: inherit; font-size: .9rem; }
+.field select { color-scheme: dark; }
+.field input:focus, .field select:focus, .field textarea:focus { border-color: #d9a368; box-shadow: 0 0 0 2px rgba(217,163,104,.15); }
+.field textarea { resize: vertical; }
+.addons { display: flex; flex-wrap: wrap; gap: .7rem 1rem; margin: 0; padding: 1rem; border: 1px solid rgba(255,255,255,.12); border-radius: .65rem; }
+.addons legend { padding: 0 .35rem; color: #e6dfd4; font-size: .82rem; font-weight: 600; }
+.addons > label:not(.field) { display: inline-flex; align-items: center; gap: .45rem; color: #c6bfb4; font-size: .83rem; }
+.addons input[type="checkbox"] { accent-color: #bf7d42; }
+.addons .field { flex-basis: 100%; }
+.formFooter { display: flex; align-items: center; justify-content: space-between; gap: 1rem; padding-top: .3rem; border-top: 1px solid rgba(255,255,255,.08); }
+.formFooter p { max-width: 22rem; margin: 0; color: #9b9388; font-size: .76rem; line-height: 1.5; }
+.submitButton:disabled { opacity: .55; cursor: wait; }
+.error { margin: 0; color: #f29b8d; font-size: .86rem; }
+.success { padding: 3rem 1.5rem; text-align: center; }
+.success > span { display: inline-grid; width: 3rem; height: 3rem; place-items: center; border: 1px solid #d9a368; border-radius: 50%; color: #d9a368; font-size: 1.5rem; }
+.success h3 { margin: 1rem 0 .5rem; color: #fff; font-family: var(--font-anton, Impact, sans-serif); font-size: 2rem; font-weight: 400; text-transform: uppercase; }
+.success p { margin: 0 0 1.25rem; color: #bcb5aa; }
+.honeypot { position: absolute; left: -10000px; width: 1px; height: 1px; overflow: hidden; }
+@media (max-width: 600px) {
+  .requestCard { align-items: flex-start; flex-direction: column; gap: 1rem; padding: 1.25rem 0; }
+  .backdrop { place-items: end center; padding: 0; }
+  .backdrop::backdrop { background: transparent; }
+.dialog { width: 100%; max-height: 94vh; border-radius: 1.1rem 1.1rem 0 0; }
+  .dialogHeader, .form { padding-right: 1.1rem; padding-left: 1.1rem; }
+  .fields { grid-template-columns: 1fr; gap: .85rem; }
+  .formFooter { align-items: stretch; flex-direction: column; }
+  .submitButton { width: 100%; }
+}
+@media (prefers-reduced-motion: reduce) { .requestCard { transition: none; } }
