@@ -5,9 +5,11 @@ import { StatusPill } from "@/components/ui/status-pill";
 
 type ProductCardProps = {
   item: InventoryItem;
+  sizeLabel?: string | null;
 };
 
-export function ProductCard({ item }: ProductCardProps) {
+export function ProductCard({ item, sizeLabel }: ProductCardProps) {
+  const displaySize = sizeLabel === undefined ? item.sizeClass : sizeLabel;
   return (
     <Link className="product-card glass-panel" href={`/shop/${item.slug}`}>
       <div className="product-media">
@@ -18,7 +20,7 @@ export function ProductCard({ item }: ProductCardProps) {
         <h2 className="product-title">{item.title}</h2>
         <p className="product-description">{item.description}</p>
         <div className="product-meta">
-          {item.sizeClass ? <StatusPill status={item.sizeClass} /> : null}
+          {displaySize ? <StatusPill status={displaySize} /> : null}
           <StatusPill status={item.availability} />
           <StatusPill status={item.dimensions} />
         </div>

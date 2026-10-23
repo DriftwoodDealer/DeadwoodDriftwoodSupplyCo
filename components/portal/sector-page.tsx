@@ -59,6 +59,9 @@ export async function SectorPage({ sector, children }: SectorPageProps) {
           </Link>
         </div>
 
+        {items.length === 0 && (
+          <p className="section-copy">No {sector.name.toLowerCase()} pieces are listed right now. Check back for the next selection.</p>
+        )}
         <div className="grid">
           {items.map((item) => (
             <ProductCard key={item.id} item={item} />

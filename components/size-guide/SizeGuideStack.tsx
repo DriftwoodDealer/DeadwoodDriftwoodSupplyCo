@@ -138,9 +138,9 @@ function SizeGuideStackContent() {
             type="button"
             className="deadwood-browse-all-btn"
             onClick={() => handleCardClick(ALL_FORMS_TIER)}
-            aria-label="Browse all active driftwood forms across sizes"
+            aria-label="Browse all reptile driftwood forms across sizes"
           >
-            Browse All Forms
+            Browse All Reptile Forms
           </button>
         </div>
       </section>
@@ -153,6 +153,7 @@ function SizeGuideStackContent() {
 
       <PieceBrowserModal
         tier={browserTier}
+        sectorSlug="reptile"
         onClose={handleCloseBrowser}
       />
     </>

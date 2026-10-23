@@ -1,7 +1,7 @@
 import type { SectorSlug } from "@/lib/mock-inventory";
 import { sizeClasses, type SizeClassEntry } from "@/lib/mock-inventory";
 
-export type SectorTier = SizeClassEntry & {
+export type SectorTier = Omit<SizeClassEntry, "name"> & { name: string } & {
   panoramic?: boolean;
   pageHref?: string;
   metadata?: Record<string, string | number | boolean | undefined>;
@@ -114,5 +114,100 @@ export const reptileStorefrontConfig: SectorStorefrontConfig = {
   inventorySection: {
     eyebrow: "Reptile & Bioactive",
     title: "Featured Forms",
+  },
+};
+
+const landscapeHeroImage = "/assets/sections/landscaping/ChatGPT%20Image%20May%2017,%202026,%2006_03_56%20PM.png";
+
+export const landscapingStorefrontConfig: SectorStorefrontConfig = {
+  slug: "landscaping",
+  sectorName: "Landscape Driftwood",
+  hero: {
+    title: "River-worn driftwood for the landscape",
+    desktopImage: "/assets/landscaping/gg.png",
+    alt: "River-worn driftwood with a personalized plaque against a light background",
+  },
+  statement: {
+    eyebrow: "One of a kind. Shaped by the river.",
+    headline: "GIVE YOUR LANDSCAPE A PIECE OF THE RIVER.",
+  },
+  tierSection: {
+    eyebrow: "Landscape Scale Guide",
+    title: "Find the right form for your space.",
+    subhead:
+      "Browse by approximate overall length. Every piece is naturally formed, so check its individual length, height, depth, and weight before choosing.",
+    tiers: [
+      {
+        name: "Garden Accent",
+        slug: "garden-accent",
+        scale: "Small focal detail",
+        range: "Under 24 inches long",
+        image: "/assets/images/river.png",
+        behavior: "browse",
+        bestFor: "Planters, compact beds, and smaller outdoor vignettes.",
+        description: "A smaller river form that adds a natural detail without taking over the space.",
+        metadata: { minLength: 0, maxLength: 24 },
+      },
+      {
+        name: "Garden Form",
+        slug: "garden-form",
+        scale: "Grounded feature",
+        range: "24–36 inches long",
+        image: landscapeHeroImage,
+        behavior: "browse",
+        bestFor: "Garden beds, pathways, and entry accents.",
+        description: "A versatile size for a visible natural focal point in a garden or entry.",
+        metadata: { minLength: 24, maxLength: 36 },
+      },
+      {
+        name: "Statement Root",
+        slug: "statement-root",
+        scale: "Large focal feature",
+        range: "36–60 inches long",
+        image: "/assets/images/deadwood-hero.png",
+        behavior: "browse",
+        bestFor: "Larger beds, water-feature surrounds, and landscape focal points.",
+        description: "A substantial form with room for its branches, curves, and natural silhouette to lead.",
+        metadata: { minLength: 36, maxLength: 60 },
+      },
+      {
+        name: "Estate Form",
+        slug: "estate-form",
+        scale: "Oversized natural landmark",
+        range: "60+ inches long",
+        image: "/assets/images/DeadwoodTREEEz.png",
+        behavior: "browse",
+        bestFor: "Large properties, commercial landscapes, and site-specific requests.",
+        description: "An oversized piece that needs a careful look at dimensions, access, and delivery.",
+        metadata: { minLength: 60 },
+      },
+    ],
+  },
+  howToShop: {
+    eyebrow: "Choosing a Piece",
+    title: "Measure the space. Then follow the form.",
+    intro:
+      "A driftwood piece can sit in more than one orientation. Start with the space you have, then consider how the wood’s shape will read there.",
+    steps: [
+      { number: "01", title: "Measure the footprint", body: "Note the available length, depth, and the height you want the piece to reach." },
+      { number: "02", title: "Picture its placement", body: "Consider the natural balance, support points, access, and how the piece will be viewed." },
+      { number: "03", title: "Check the details", body: "Review exact dimensions, weight, delivery needs, and any plaque or house-number options." },
+    ],
+  },
+  customAndTrade: {
+    customEyebrow: "Custom Requests",
+    customTitle: "Looking for a particular shape?",
+    customBody: "Tell us about the space and the form you have in mind. We can keep an eye out during future river walks.",
+    customButtonText: "Request a Landscape Piece",
+    customHref: "#landscape-inventory",
+    tradeEyebrow: "For Landscape Professionals",
+    tradeTitle: "Need driftwood for upcoming projects?",
+    tradeBody: "Tell us about your work, the sizes you use, and how often you source. We’ll talk through availability and delivery options.",
+    tradeButtonText: "Ask About Ongoing Supply",
+    tradeHref: "#landscape-supply",
+  },
+  inventorySection: {
+    eyebrow: "One-of-a-kind pieces",
+    title: "Available Landscape Driftwood",
   },
 };

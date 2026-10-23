@@ -1,10 +1,8 @@
 import Image from "next/image";
 import Link from "next/link";
-import { getFeaturedInventory, sectors } from "@/lib/mock-inventory";
-import { ProductCard } from "@/components/portal/product-card";
+import { sectors } from "@/lib/mock-inventory";
 
 export default function HomePage() {
-  const featuredItems = getFeaturedInventory();
 
   return (
     <>
@@ -27,8 +25,8 @@ export default function HomePage() {
             <h2 className="section-heading">Four ways into the river archive.</h2>
           </div>
           <p className="section-copy">
-            The same wood can serve different worlds. The catalog is organized by how the
-            piece will live after it leaves the river.
+            Choose your section to browse wood selected and prepared for that use.
+            Each section has its own inventory.
           </p>
         </div>
 
@@ -80,39 +78,16 @@ export default function HomePage() {
           <div>
             <p className="eyebrow">From The River Archive</p>
             <h2 id="home-river-archive" className="product-title">
-              A few pieces worth crossing the room for.
+              Find the right section for your next piece.
             </h2>
           </div>
           <Link className="button" href="/shop">
-            Shop
+            Shop all
           </Link>
         </div>
 
-        <div className="grid">
-          {featuredItems.map((item) => (
-            <ProductCard key={item.id} item={item} />
-          ))}
-        </div>
       </section>
 
-      <footer className="home-footer" aria-label="Site footer">
-        <div className="home-footer-content">
-          <div className="home-footer-brand">DEADWOOD: DRIFTWOOD SUPPLY CO. LLC</div>
-          <a className="home-footer-email" href="mailto:deadwooddriftwood@gmail.com" aria-label="Email Deadwood Driftwood Supply Co.">
-            Email us
-          </a>
-          <div className="home-footer-links">
-            <Link href="/terms">Terms</Link>
-            <span aria-hidden="true">|</span>
-            <Link href="/privacy">Privacy</Link>
-            <span aria-hidden="true">|</span>
-            <Link href="/shipping">Shipping</Link>
-            <span aria-hidden="true">|</span>
-            <Link href="/contact">Contact</Link>
-          </div>
-          <div className="home-footer-rights">© 2026 DEADWOOD. All rights reserved.</div>
-        </div>
-      </footer>
     </>
   );
 }

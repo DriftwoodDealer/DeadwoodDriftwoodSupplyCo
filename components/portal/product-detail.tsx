@@ -4,7 +4,7 @@ import { Suspense, useState } from "react";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import { Anton } from "next/font/google";
-import { type InventoryItem, SIZE_CLASS_RANGES } from "@/lib/mock-inventory";
+import { type InventoryItem, SIZE_CLASS_RANGES, sectors } from "@/lib/mock-inventory";
 import { StatusPill } from "@/components/ui/status-pill";
 import { useCart } from "@/components/cart/CartContext";
 
@@ -48,36 +48,23 @@ function ProductDetailContent({
   const purchasable = item.price > 0 && item.status === "published";
   const showBioactiveTreatment =
     present(item.bioSanctity) &&
-    item.sectors.some((sector) => ["Reptile", "Aquariums"].includes(sector));
+    item.sector === "Reptile";
 
-  const isReptile =
-    item.sector === "Reptile" ||
-    item.sectors?.includes("Reptile") ||
-    Boolean(item.sizeClass);
+  const isReptile = item.sector === "Reptile";
+  const sectorSlug = sectors.find((sector) => sector.aliases[0] === item.sector)?.slug;
   const sizeClassSlug = item.sizeClass
     ? item.sizeClass.toLowerCase().replace(/\s+/g, "-")
     : null;
-  const fromTier = searchParams?.get("fromTier") || sizeClassSlug;
-
+  const fromTier = isReptile ? searchParams?.get("fromTier") || sizeClassSlug : null;
   const backHref = fromTier
-    ? `/shop/reptile?tier=${fromTier}`
-    : isReptile
-    ? "/shop/reptile"
-    : "/shop";
+    ? `/shop/reptile?tier=${encodeURIComponent(fromTier)}`
+    : sectorSlug ? `/shop/${sectorSlug}` : "/shop";
   const backLabel = fromTier
     ? `← Back to ${item.sizeClass || "Browse"} Pieces`
-    : isReptile
-    ? "← Back to Reptile Hardscape"
-    : "← Back to Shop";
+    : `← Back to ${item.sector}`;
 
   function handleBack() {
-    if (fromTier) {
-      router.push(`/shop/reptile?tier=${fromTier}`);
-    } else if (modal) {
-      router.back();
-    } else {
-      router.push(backHref);
-    }
+    router.push(backHref);
   }
 
   function handleAddToCart() {
@@ -205,10 +192,10 @@ function ProductDetailContent({
           {item.sectors?.length ? (
             <div style={{ marginTop: "1rem" }}>
               <h2 className="product-title" style={{ fontSize: "0.88rem", marginBottom: "0.4rem" }}>
-                Sector Fit
+                Section
               </h2>
               <div className="detail-sectors" style={{ display: "flex", gap: "0.4rem", flexWrap: "wrap" }}>
-                {item.sectors.map((sector) => (
+                {[item.sector].map((sector) => (
                   <span className="spec-badge" key={sector}>
                     {sector}
                   </span>

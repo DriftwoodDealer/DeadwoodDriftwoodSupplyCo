@@ -7,19 +7,26 @@ import { Anton } from "next/font/google";
 import { useCart } from "@/components/cart/CartContext";
 import {
   inventoryItems,
+  getSectorBySlug,
   type InventoryItem,
   type SizeClassEntry,
   SIZE_CLASS_RANGES,
 } from "@/lib/mock-inventory";
+import { getLandscapeLengthInches, getLandscapeSizeName } from "@/lib/landscape-sizing";
 
 const anton = Anton({ weight: "400", subsets: ["latin"], display: "swap" });
 
 type PieceBrowserModalProps = {
-  tier: SizeClassEntry | null;
+  tier: (Omit<SizeClassEntry, "name"> & {
+    name: string;
+    metadata?: Record<string, string | number | boolean | undefined>;
+  }) | null;
   onClose: () => void;
+  inventory?: InventoryItem[];
+  sectorSlug: string;
 };
 
-export function PieceBrowserModal({ tier, onClose }: PieceBrowserModalProps) {
+export function PieceBrowserModal({ tier, onClose, inventory, sectorSlug }: PieceBrowserModalProps) {
   const [selectedPiece, setSelectedPiece] = useState<InventoryItem | null>(null);
   const [activeMediaIndex, setActiveMediaIndex] = useState(0);
   const [touchStartY, setTouchStartY] = useState<number | null>(null);
@@ -30,13 +37,21 @@ export function PieceBrowserModal({ tier, onClose }: PieceBrowserModalProps) {
 
   const isAllForms = tier?.slug === "all";
 
+  const sector = getSectorBySlug(sectorSlug);
+  const sourceInventory = (inventory || inventoryItems).filter(
+    (item) => sector && item.sector === sector.aliases[0]
+  );
   const pieces = tier
-    ? inventoryItems.filter((item) => {
+    ? sourceInventory.filter((item) => {
         if (item.status !== "published") return false;
-        if (isAllForms) {
-          return ["Medium", "Specimen XL", "Centerpiece XXL"].includes(
-            item.sizeClass as string
-          );
+        if (isAllForms) return true;
+        const minLength = Number(tier.metadata?.minLength);
+        const maxLength = Number(tier.metadata?.maxLength);
+        if (Number.isFinite(minLength) || Number.isFinite(maxLength)) {
+          const measuredLength = getLandscapeLengthInches(item.dimensions);
+          if (measuredLength === null) return false;
+          return (!Number.isFinite(minLength) || measuredLength >= minLength)
+            && (!Number.isFinite(maxLength) || measuredLength < maxLength);
         }
         return item.sizeClass === tier.name;
       })
@@ -130,9 +145,9 @@ export function PieceBrowserModal({ tier, onClose }: PieceBrowserModalProps) {
           }}
         >
           <div>
-            <span className="piece-browser-range">{tier.range}</span>
+            <span className="piece-browser-range">{isAllForms ? "All available sizes" : tier.range}</span>
             <h2 id="piece-browser-title" className={`${anton.className} piece-browser-title`}>
-              {isAllForms ? "All Forms" : tier.name}
+              {isAllForms ? `All ${sector?.name || "Sector"} Forms` : tier.name}
             </h2>
           </div>
           <button
@@ -145,7 +160,7 @@ export function PieceBrowserModal({ tier, onClose }: PieceBrowserModalProps) {
         </div>
 
         <div className="piece-browser-sub-row">
-          <p className="piece-browser-sub">{tier.description}</p>
+          <p className="piece-browser-sub">{isAllForms ? `Browse the current ${sector?.name.toLowerCase() || "section"} selection across all sizes.` : tier.description}</p>
         </div>
 
         {/* Main interactive area with Grid + Slide-Out Inspector */}
@@ -189,10 +204,10 @@ export function PieceBrowserModal({ tier, onClose }: PieceBrowserModalProps) {
                         <span className="piece-browser-badge">One of a kind</span>
                       </div>
                       <div className="piece-browser-card-body">
-                        {item.sizeClass && (
+                        {(sectorSlug === "landscaping" || item.sizeClass) && (
                           <div className="piece-browser-size-pill">
-                            <span className="size-name">{item.sizeClass}</span>
-                            {SIZE_CLASS_RANGES[item.sizeClass] && (
+                            <span className="size-name">{sectorSlug === "landscaping" ? getLandscapeSizeName(item.dimensions) : item.sizeClass}</span>
+                            {sectorSlug !== "landscaping" && item.sizeClass && SIZE_CLASS_RANGES[item.sizeClass] && (
                               <span className="size-scale"> · {SIZE_CLASS_RANGES[item.sizeClass]}</span>
                             )}
                           </div>
@@ -216,7 +231,7 @@ export function PieceBrowserModal({ tier, onClose }: PieceBrowserModalProps) {
               <div className="piece-browser-empty">
                 <p>No published pieces in this size class right now.</p>
                 <p className="piece-browser-empty-sub">
-                  Pieces are harvested, photographed, and heat-treated in limited river runs. Check back soon as new pieces enter the archive.
+                  Check back soon as more pieces enter this section, or send us a custom request.
                 </p>
               </div>
             )}
@@ -348,10 +363,10 @@ export function PieceBrowserModal({ tier, onClose }: PieceBrowserModalProps) {
                   <h3 className={`${anton.className} piece-inspector-title`}>
                     {selectedPiece.title}
                   </h3>
-                  {selectedPiece.sizeClass && (
+                  {(sectorSlug === "landscaping" || selectedPiece.sizeClass) && (
                     <div className="piece-inspector-size-pill">
-                      <span className="size-name">{selectedPiece.sizeClass}</span>
-                      {SIZE_CLASS_RANGES[selectedPiece.sizeClass] && (
+                      <span className="size-name">{sectorSlug === "landscaping" ? getLandscapeSizeName(selectedPiece.dimensions) : selectedPiece.sizeClass}</span>
+                      {sectorSlug !== "landscaping" && selectedPiece.sizeClass && SIZE_CLASS_RANGES[selectedPiece.sizeClass] && (
                         <span className="size-scale"> · Scale: {SIZE_CLASS_RANGES[selectedPiece.sizeClass]}</span>
                       )}
                     </div>
@@ -368,12 +383,12 @@ export function PieceBrowserModal({ tier, onClose }: PieceBrowserModalProps) {
                   <p className="piece-inspector-desc">{selectedPiece.description}</p>
 
                   <div className="piece-inspector-specs">
-                    {selectedPiece.sizeClass && (
+                    {(sectorSlug === "landscaping" || selectedPiece.sizeClass) && (
                       <div className="piece-spec-item">
-                        <span className="piece-spec-label">Size Class</span>
+                        <span className="piece-spec-label">Size</span>
                         <strong className="piece-spec-val">
-                          {selectedPiece.sizeClass}
-                          {SIZE_CLASS_RANGES[selectedPiece.sizeClass] && ` (${SIZE_CLASS_RANGES[selectedPiece.sizeClass]})`}
+                          {sectorSlug === "landscaping" ? getLandscapeSizeName(selectedPiece.dimensions) : selectedPiece.sizeClass}
+                          {sectorSlug !== "landscaping" && selectedPiece.sizeClass && SIZE_CLASS_RANGES[selectedPiece.sizeClass] && ` (${SIZE_CLASS_RANGES[selectedPiece.sizeClass]})`}
                         </strong>
                       </div>
                     )}

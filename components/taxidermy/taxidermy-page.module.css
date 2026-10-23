@@ -1,0 +1,158 @@
+.hero {
+  min-height: min(82vh, 820px);
+  background: #000;
+}
+.heroImage {
+  object-position: center 43%;
+}
+.heroShade {
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(90deg, rgba(0, 0, 0, 0.4), transparent 68%),
+    linear-gradient(0deg, #050505, transparent 23%);
+}
+.heroCopy h1 {
+  max-width: 43rem;
+  font-size: clamp(3.6rem, 7.5vw, 7rem);
+}
+.heroCopy > p:not(:global(.eyebrow)) {
+  max-width: 28rem;
+}
+.reach {
+  display: block;
+  margin-top: 1.4rem;
+  color: #d4c8b7;
+  font-size: 0.72rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+.heroCaption {
+  position: absolute;
+  right: 2rem;
+  bottom: 1.2rem;
+  color: #c4b8a6;
+  font-size: 0.62rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+.tiers {
+  padding-bottom: 0;
+}
+.tierTitle {
+  font-family: var(--font-anton, Impact, sans-serif);
+}
+.tier {
+  text-align: left;
+}
+.price {
+  margin: 1rem 0;
+  color: #e0ad78;
+  font-size: 1.5rem;
+  font-weight: 500;
+}
+.price span {
+  display: block;
+  margin-top: 0.25rem;
+  color: #c2b7a8;
+  font-size: 0.7rem;
+  font-weight: 400;
+  letter-spacing: 0.04em;
+}
+.tierVisual {
+  overflow: hidden;
+}
+.studyLabel {
+  position: absolute;
+  right: 1rem;
+  bottom: 0.8rem;
+  z-index: 1;
+  padding: 0.35rem 0.55rem;
+  color: #e9dfd0;
+  background: #090909bb;
+  font-size: 0.57rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+.priceNote,
+.inventoryNote {
+  color: #bcb5aa;
+  font-size: 0.85rem;
+  line-height: 1.7;
+}
+.priceNote {
+  max-width: 58rem;
+  margin: 1.4rem 0 0;
+}
+.inventoryNote {
+  margin: -0.3rem 0 1.5rem;
+}
+.empty {
+  padding: 2rem;
+  border: 1px solid #56412c;
+  color: #d4c8b7;
+  line-height: 1.7;
+}
+.custom {
+  scroll-margin-top: 110px;
+}
+.page a:focus-visible {
+  outline: 2px solid #f5e8d3;
+  outline-offset: 5px;
+}
+@media (max-width: 760px) {
+  .hero {
+    min-height: 850px;
+    min-height: 94svh;
+    align-items: flex-end;
+  }
+  .heroImage {
+    object-fit: cover;
+    object-position: 67% top;
+    height: 63% !important;
+  }
+  .heroShade {
+    background: linear-gradient(0deg, #050505 4%, #050505 31%, transparent 65%);
+  }
+  .heroCopy {
+    padding-top: 20rem;
+    padding-bottom: 3rem;
+  }
+  .heroCopy h1 {
+    font-size: clamp(3.4rem, 13vw, 5rem);
+  }
+  .heroCopy > p:not(:global(.eyebrow)) {
+    max-width: 30rem;
+  }
+  .heroCaption {
+    right: 1rem;
+    bottom: 0.6rem;
+  }
+  .reach {
+    font-size: 0.62rem;
+  }
+}
+
+/* Keep the familiar inset stack without squeezing tablet copy into a sliver. */
+@media (min-width: 768px) and (max-width: 1100px) {
+  .tiers :global(.deadwood-tier-stack) {
+    width: 100%;
+  }
+  .tier :global(.tier-card-inner) {
+    grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr);
+  }
+  .tier :global(.tier-card-btn) {
+    white-space: nowrap;
+  }
+}
+.tier {
+  cursor: default;
+}
+@media (prefers-reduced-motion: reduce) {
+  .tier {
+    transition: none;
+  }
+  .tier:hover {
+    transform: none;
+  }
+}
